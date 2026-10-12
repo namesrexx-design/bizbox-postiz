@@ -222,9 +222,13 @@ export const MediaBox: FC<{
     if (debouncedSearch.trim()) {
       params.set('search', debouncedSearch.trim());
     }
-    return (await fetch(`/media?${params.toString()}`)).json();
+    const response = await fetch(`/media?${params.toString()}`);
+    if (!response.ok) {
+      throw new Error('Could not load media');
+    }
+    return response.json();
   }, [page, debouncedSearch]);
-  const { data, mutate, isLoading } = useSWR(
+  const { data, error, mutate, isLoading } = useSWR(
     `get-media-${page}-${debouncedSearch}`,
     loadMedia
   );
@@ -480,7 +484,19 @@ export const MediaBox: FC<{
                 'flex justify-center items-center gap-[20px] flex-col'
             )}
           >
-            {!isLoading && !data?.results?.length && (
+            {error && (
+              <div role="alert" className="flex flex-col items-center gap-[16px] p-[20px] text-center">
+                <div>{t('could_not_load_media', 'Could not load media. Please try again.')}</div>
+                <button
+                  type="button"
+                  className="bg-btnSimple text-btnText px-[18px] min-h-[44px] rounded-[8px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-current"
+                  onClick={() => mutate()}
+                >
+                  {t('retry', 'Retry')}
+                </button>
+              </div>
+            )}
+            {!error && !isLoading && !data?.results?.length && (
               <>
                 <NoMediaIcon />
                 <div className="text-[20px] font-[600]">
