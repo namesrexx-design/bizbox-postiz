@@ -1,0 +1,30 @@
+{
+  "scope": "actual logo components rendered in isolated sidebar fixture; not full app",
+  "layouts": [
+    {
+      "engine": "chromium",
+      "width": 390,
+      "sidebar_fits": true,
+      "page_overflow": false
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "sidebar_fits": true,
+      "page_overflow": false
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "sidebar_fits": true,
+      "page_overflow": false
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "sidebar_fits": true,
+      "page_overflow": false
+    }
+  ],
+  "assertions_passed": 12
+}
