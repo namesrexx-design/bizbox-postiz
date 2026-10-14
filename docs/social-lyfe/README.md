@@ -12,7 +12,7 @@ The sidebar mark, sign-in wordmark, page titles, logout label, favicon and Apple
 - Full pinned v2.25.0 candidate frontend production build, including TypeScript: exit 0.
 - Actual built sign-in page: Chromium/WebKit at 390px and 1440px; four layouts passed. Logo loaded, Social LYFE title correct, source link visible, no horizontal overflow or page errors.
 - Actual compact/full logo components: four isolated browser layouts passed, including the 64px sidebar rail.
-- Independent scoped source review: clear; follow-up covers the shared visible source-link helper.
+- Independent scoped source review: two source-link accessibility findings fixed and re-reviewed clear. Actual light/dark theme and keyboard-focus checks pass in both browsers; contrast 17.54:1 dark / 19.30:1 light, source link fits the 64px rail and 92px billing-header fixture. Built login keyboard-focus check also passed.
 - No provider, credential, database, scheduled-post or publishing logic changed.
 
 Browser QA intercepted external calls. It did not submit sign-in, create accounts, authorize providers, exercise authenticated calendar screens, or publish content.

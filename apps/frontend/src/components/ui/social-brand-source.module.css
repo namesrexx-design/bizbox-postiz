@@ -1,0 +1,11 @@
+.source {
+  color: var(--new-btn-text, #ffffff);
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: underline;
+  border-radius: 2px;
+  padding-inline: 2px;
+}
+.source:focus-visible {
+  box-shadow: 0 0 0 2px var(--new-btn-text, #ffffff);
+}
