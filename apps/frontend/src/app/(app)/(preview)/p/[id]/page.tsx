@@ -18,7 +18,7 @@ import { CreationMethodBadge } from '@gitroom/frontend/components/launches/creat
 
 dayjs.extend(utc);
 export const metadata: Metadata = {
-  title: `${isGeneralServerSide() ? 'Social BizBox' : 'Gitroom'} Preview`,
+  title: `${isGeneralServerSide() ? 'Social LYFE' : 'Gitroom'} Preview`,
   description: '',
 };
 export default async function Auth(

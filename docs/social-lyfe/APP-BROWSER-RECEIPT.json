@@ -1,0 +1,86 @@
+{
+  "scope": "Actual built frontend login, isolated local service; no authenticated screens, OAuth, account creation or publication",
+  "results": [
+    {
+      "engine": "chromium",
+      "width": 390,
+      "http": 200,
+      "title": "Social LYFE Login",
+      "logo": {
+        "complete": true,
+        "naturalWidth": 256,
+        "width": 48
+      },
+      "overflow": false,
+      "pageErrors": [],
+      "external_intercepted": [
+        {
+          "host": "fonts.googleapis.com",
+          "path": "/css2",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "http": 200,
+      "title": "Social LYFE Login",
+      "logo": {
+        "complete": true,
+        "naturalWidth": 256,
+        "width": 48
+      },
+      "overflow": false,
+      "pageErrors": [],
+      "external_intercepted": [
+        {
+          "host": "fonts.googleapis.com",
+          "path": "/css2",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "http": 200,
+      "title": "Social LYFE Login",
+      "logo": {
+        "complete": true,
+        "naturalWidth": 256,
+        "width": 48
+      },
+      "overflow": false,
+      "pageErrors": [],
+      "external_intercepted": [
+        {
+          "host": "fonts.googleapis.com",
+          "path": "/css2",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "http": 200,
+      "title": "Social LYFE Login",
+      "logo": {
+        "complete": true,
+        "naturalWidth": 256,
+        "width": 48
+      },
+      "overflow": false,
+      "pageErrors": [],
+      "external_intercepted": [
+        {
+          "host": "fonts.googleapis.com",
+          "path": "/css2",
+          "method": "GET"
+        }
+      ]
+    }
+  ],
+  "assertions_passed": 40
+}
