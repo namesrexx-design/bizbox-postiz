@@ -1,3 +1,5 @@
+> **Superseded release candidate — 2026-10-15 UTC.** Rexx selected **Lyfe Social**, relayed in Agent Room main #1570. The existing PR #1 now contains that final visible name using the original LYFEY assets and its own matching-source link. The Social LYFE build, screenshots, archive and deployment instructions below are historical evidence only: **do not deploy them**. A fresh build, current browser validation, startup/rollback review, Master sign-off and the exact release approval remain required. No new compile or Live rollout was executed in this consolidation. Web-app reported automatic approval rejection of its fresh Docker frontend build before execution; this batch does not retry it.
+
 # Approval card: Social LYFE calendar branding
 
 **Decision requested after Master review: Approve deployment / Send back.**

@@ -23,7 +23,7 @@ export const BillingAfter = () => {
         <h1 className="text-3xl [@media(max-width:1024px)]:text-xl">
           {t(
             'social_lyfe_calendar',
-            'Social LYFE'
+            'Lyfe Social'
           )}
           <br />
           {t(
