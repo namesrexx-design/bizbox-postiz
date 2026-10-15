@@ -125,7 +125,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           </SentryComponent>
         </VariableContextComponent>
         <footer className="px-4 py-2 text-xs text-primary" aria-label="Software source">
-          Socialive · Based on Postiz (AGPL-3.0) · <a href={process.env.NEXT_PUBLIC_SOURCE_CODE_URL || "https://github.com/namesrexx-design/bizbox-postiz/tree/fix/codex/socialive-name-20261014"} className="underline">Source code</a>
+          Lyfe Social · Based on Postiz (AGPL-3.0) · <a href={process.env.NEXT_PUBLIC_SOURCE_CODE_URL || "https://github.com/namesrexx-design/bizbox-postiz/tree/fix/codex/socialive-name-20261014"} className="underline">Source code</a>
         </footer>
       </body>
     </html>
