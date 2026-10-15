@@ -1,0 +1,15 @@
+# Socialive candidate; existing release/startup/recovery gates remain required.
+# REVIEW ONLY. Use WITH the existing /srv/lyfe/postiz/docker-compose.yml.
+# Existing env, networks, uploads/config and datastore volumes remain in the base.
+services:
+  postiz:
+    image: ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
+    # Fresh app container only. Intentionally bypass vendor pm2-run/prisma-db-push.
+    entrypoint: ["sh", "-c", "nginx && pnpm run --parallel pm2 && pm2 logs"]
+    command: []
+    volumes:
+      - /srv/lyfe/postiz/branding/releases/315fab7b/frontend:/app/apps/frontend/.next:ro
+      - /srv/lyfe/postiz/branding/releases/315fab7b/assets/social-lyfe.png:/app/apps/frontend/public/social-lyfe.png:ro
+      - /srv/lyfe/postiz/branding/releases/315fab7b/assets/social-lyfe-180.png:/app/apps/frontend/public/social-lyfe-180.png:ro
+      - /srv/lyfe/postiz/branding/releases/315fab7b/assets/favicon.png:/app/apps/frontend/public/favicon.png:ro
+      - /srv/lyfe/postiz/branding/releases/315fab7b/assets/favicon.ico:/app/apps/frontend/public/favicon.ico:ro
