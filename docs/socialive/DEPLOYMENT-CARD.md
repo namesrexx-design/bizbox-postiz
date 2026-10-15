@@ -1,5 +1,7 @@
 # Review card: Socialive calendar branding
 
+> Superseded candidate: Rexx selected exact **Lyfe Social** after this Socialive artifact was sealed. Retain this payload and its hashes as historical evidence; do not deploy it as Lyfe Social. The final-name source is committed at `a27639367090d78b635fa9e3a93f74ee7f48d2af`, but its fresh frontend build was rejected before execution by automatic approval (CreateProcess blocked by policy). No Lyfe Social compiled artifact or live deployment is claimed.
+
 **Status: source and full frontend build passed; new review payload sealed; exact display-name clarification pending; NOT approved or deployed.**
 
 Rexx requested **Socialive**, retaining the approved Lifey cloud. Visible titles, logo labels, billing/logout copy and footer are renamed. Postiz/AGPL attribution, source offers, artwork bytes, asset filenames and upstream identifiers are retained.

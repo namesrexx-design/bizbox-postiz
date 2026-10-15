@@ -1,5 +1,7 @@
 # Socialive calendar branding
 
+> Superseded candidate: Rexx selected exact **Lyfe Social** after this Socialive artifact was sealed. Retain this payload and its hashes as historical evidence; do not deploy it as Lyfe Social. The final-name source is committed at `a27639367090d78b635fa9e3a93f74ee7f48d2af`, but its fresh frontend build was rejected before execution by automatic approval (CreateProcess blocked by policy). No Lyfe Social compiled artifact or live deployment is claimed.
+
 Rexx requested the exact product name **Socialive** on October 14, 2026. This candidate renames the visible name in the existing Social LYFE implementation: sign-in and sidebar labels, page titles, billing/logout copy, and root footer. It retains the approved Lifey cloud artwork, current asset filenames, Postiz/AGPL attribution, corresponding-source links, and upstream package identifiers.
 
 The isolated Production checkout is `/srv/lyfe/work-socialive-name-20261014`, branch `fix/codex/socialive-name-20261014`, based on `18ed06d55f1e5b41316f665ed494912a0d3b3511`. Tested product source is `315fab7be5d838d9ce421d66bc107cf83e430f65`.
