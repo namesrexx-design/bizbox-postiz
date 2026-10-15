@@ -40,7 +40,8 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   return (
     <html>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/social-lyfe-180.png" />
         {!!process.env.DATAFAST_WEBSITE_ID && (
           <Script
             data-website-id={process.env.DATAFAST_WEBSITE_ID}
@@ -123,6 +124,9 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
             </Plausible>
           </SentryComponent>
         </VariableContextComponent>
+        <footer className="px-4 py-2 text-xs text-primary" aria-label="Software source">
+          Lyfe Social · Based on Postiz (AGPL-3.0) · <a href={process.env.NEXT_PUBLIC_SOURCE_CODE_URL || "https://github.com/namesrexx-design/bizbox-postiz/tree/fix/codex/social-bizbox-brand-20261012"} className="underline">Source code</a>
+        </footer>
       </body>
     </html>
   );

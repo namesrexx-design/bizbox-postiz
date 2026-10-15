@@ -1,0 +1,15 @@
+{
+  "brand": "Social LYFE",
+  "owner_request": "Rexx explicitly requested Social LYFE with existing LYFEY logo on 2026-10-14",
+  "source_repository": "namesrexx-design/bizbox",
+  "source_path": "public/media/start/lyfey-awake.png",
+  "source_sha256": "99229f0bd4d18b910ca24e728edf895cb8af867211d88f418ee4ec82ad09701c",
+  "derivatives": "Existing image scaled/padded for web logo, browser icon and touch icon. No generated replacement artwork.",
+  "licence": "Owner-supplied existing LYFEY brand artwork; upstream Postiz code remains AGPL-3.0. Upstream LICENSE unchanged.",
+  "assets": {
+    "apps/frontend/public/social-lyfe.png": "d35aea622bf27b2deac19ab6873e049eb79c3980c4b6952ed7601ffd6d326c27",
+    "apps/frontend/public/social-lyfe-180.png": "36406f6f765da8c86020ab74b6fd7ab2f97261d49987f7ae2827fa6683c8886e",
+    "apps/frontend/public/favicon.png": "1cf0c4dfa6aec68db920e08ed23c00c0d5e22ef7dff463196d978569872099f5",
+    "apps/frontend/public/favicon.ico": "9c065db52477045fc9c9f10a1c3fc377bff4c7f2f41e8ba64139e0c3becb46f5"
+  }
+}

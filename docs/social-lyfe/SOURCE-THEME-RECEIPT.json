@@ -1,0 +1,45 @@
+{
+  "scope": "Actual shared source-link/logo code and module CSS with actual theme tokens; isolated 64px rail/92px billing-header fixture, global outline reset retained",
+  "checks": [
+    {
+      "engine": "chromium",
+      "theme": "dark",
+      "width": 390,
+      "contrast": 17.54368175177711,
+      "keyboardFocusVisible": true,
+      "ring": "rgb(255, 255, 255) 0px 0px 0px 2px",
+      "billingSourceUnclipped": true,
+      "railFits": true
+    },
+    {
+      "engine": "chromium",
+      "theme": "light",
+      "width": 390,
+      "contrast": 19.30450748626618,
+      "keyboardFocusVisible": true,
+      "ring": "rgb(14, 14, 14) 0px 0px 0px 2px",
+      "billingSourceUnclipped": true,
+      "railFits": true
+    },
+    {
+      "engine": "webkit",
+      "theme": "dark",
+      "width": 390,
+      "contrast": 17.54368175177711,
+      "keyboardFocusVisible": true,
+      "ring": "rgb(255, 255, 255) 0px 0px 0px 2px",
+      "billingSourceUnclipped": true,
+      "railFits": true
+    },
+    {
+      "engine": "webkit",
+      "theme": "light",
+      "width": 390,
+      "contrast": 19.30450748626618,
+      "keyboardFocusVisible": true,
+      "ring": "rgb(14, 14, 14) 0px 0px 0px 2px",
+      "billingSourceUnclipped": true,
+      "railFits": true
+    }
+  ]
+}

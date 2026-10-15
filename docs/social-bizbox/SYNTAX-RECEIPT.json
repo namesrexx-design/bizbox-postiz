@@ -1,0 +1,5 @@
+{
+  "kind": "TSX syntax transform only, not full typecheck/build or browser QA",
+  "passed": 23,
+  "errors": []
+}

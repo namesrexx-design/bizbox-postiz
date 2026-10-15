@@ -1,0 +1,7 @@
+# Use WITH the original base file ALONE, NOT with compose.social-lyfe.yml.
+# Recreate only the app, loading its original frontend from the pinned image.
+services:
+  postiz:
+    image: ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
+    entrypoint: ["sh", "-c", "nginx && pnpm run --parallel pm2 && pm2 logs"]
+    command: []

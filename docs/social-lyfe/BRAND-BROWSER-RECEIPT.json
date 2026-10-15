@@ -1,0 +1,39 @@
+{
+  "scope": "Actual logo components in isolated sidebar fixture; not full app",
+  "layouts": [
+    {
+      "engine": "chromium",
+      "width": 390,
+      "sidebar_fits": true,
+      "page_overflow": false,
+      "logo_images_decoded": 2,
+      "page_errors": 0
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "sidebar_fits": true,
+      "page_overflow": false,
+      "logo_images_decoded": 2,
+      "page_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "sidebar_fits": true,
+      "page_overflow": false,
+      "logo_images_decoded": 2,
+      "page_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "sidebar_fits": true,
+      "page_overflow": false,
+      "logo_images_decoded": 2,
+      "page_errors": 0
+    }
+  ],
+  "assertions_passed": 20,
+  "tsx_syntax_transforms": 26
+}
