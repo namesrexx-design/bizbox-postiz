@@ -48,11 +48,14 @@ not clear root capacity. No compiler reservation is implied by these commands.
 | Dependency lock SHA256 | `a80b52413e65fc53791524120ef4fa300a2815020885961801ebed02cf9f1fee` |
 | D78 rehearsal image | `sha256:7686a2108317973bb21ed6194dc298432ea426229b8ec0e6c26a67610f6c41a1`; exported and network-none checked; corrected-source parity remains open |
 
-The d78 build/export and network-none image/provider checks have passed. Runtime
-was safely stopped before app startup for the reserved Web-app window; resume
-only after W2 returns the next explicit runtime grant. The corrected bear/bull
-source in PR6 and its reviewed PR7 repin require a separate later build grant.
-This d78 image cannot clear corrected-source branding parity.
+The d78 build/export, actual startup/source/activation/queued email, Chromium and
+WebKit phone/editor/download, and complete-image rollback have passed
+[W3 independent CHECK](https://github.com/namesrexx-design/bizbox-postiz/pull/5#issuecomment-6209171617). All 232 patched files and source environment were
+restored; schema, critical synthetic rows, empty Redis, completed workflow and
+two mailbox messages were preserved. All owned rehearsal processes and browsers
+exited and all three kernel slots were released at 2026-10-16 06:04:15 UTC.
+The corrected bear/bull source in PR6 and its reviewed PR7 repin still require a
+separate later build grant. D78 cannot clear corrected-source branding parity.
 
 These external operator files accompany d78; they do not enter or modify its
 source archive. Never use the historical helper embedded in d78, the older
@@ -71,7 +74,8 @@ independent startup command.
    on Production: synthetic services only, no Live env/queue, nginx plus frontend,
    backend and orchestrator, authenticated source bytes, actual queued email to
    Mailpit, unchanged app schema and complete-image patch-preserving app rollback.
-   W3 must check the actual result; these runtime gates remain **OPEN**.
+   These d78 runtime gates passed independent W3 CHECK; a different final image
+   still needs its own actual acceptance.
 3. Claude/web-app must publish [BizBox #480](https://github.com/namesrexx-design/bizbox/pull/480)
    and read back authenticated first-request Social selection, manual Main,
    unknown-room fallback and missing-pass 401. Its companion-review author hold is
@@ -89,5 +93,6 @@ container, complete private snapshot, active LinkedIn provider and dated backup,
 effective env, networks, config/uploads volumes, stored channels and queues.
 Never run root pm2/schema push or migrations. Private Live snapshots stay
 root-only on Live. Outputs remain under `/mnt/storagebox/work/2452-release`;
-the d78 image is built and exported. The baseline app passed stable startup and all 232 preservation hashes. Candidate
-startup/source/email/phone/rollback and Live cutover remain open.
+the d78 image is built and exported. Candidate and complete restored rollback
+passed actual W3 CHECK. Final corrected-image acceptance and #480 publication
+remain open; no Live cutover has been performed.

@@ -1,6 +1,7 @@
 # Task 2452/2519: guarded image build and isolated rehearsal
 
-This is operator preparation, not a release image or a startup PASS. The selected
+This preparation produced the d78 rehearsal image and passed actual isolated
+startup and rollback acceptance. The selected
 application source remains `d78e598b6117607d24cd0465f98639241c107571` in
 `/srv/lyfe/pods/social-media-w2/source-context-final-6480`. These external operator
 helpers do not change that application's source offer or rebuild the old preview.
@@ -18,10 +19,12 @@ Existing owner approval `appr_mvabgkmsa61a518f` is approved; do not duplicate it
   the three-slot `flock` shim, and refuses to queue behind an occupied slot.
 - W1: the exact d78 image compiled, exported and passed network-none image and
   compiled-provider checks. Its immutable ID is recorded in `release-image.id`.
-  Application startup/email/phone/rollback remain open. Resume only after W2's
-  next explicit runtime grant following the reserved Web-app window. D78 retains
-  the cloud artwork and cannot clear corrected PR6 branding parity; PR7 repins
-  the corrected candidate for a separate later build grant.
+  Actual startup, source, activation/queued email, Chromium/WebKit phone/editor
+  and complete rollback passed [W3 CHECK](https://github.com/namesrexx-design/bizbox-postiz/pull/5#issuecomment-6209171617). All 232 patched files, source
+  environment, schema and critical synthetic state were preserved. Owned runtime,
+  relay and browsers exited and all three slots were released at 06:04:15Z on
+  2026-10-16. D78 retains the cloud artwork and cannot clear corrected PR6
+  branding parity; PR7 requires a separate later compiler grant.
 - Claude/web-app: merge and publish [BizBox #480](https://github.com/namesrexx-design/bizbox/pull/480),
   then verify saved Main → Social on its first request, manual Main stays Main,
   unknown room falls back Main, and missing owner pass stays 401. It is currently
