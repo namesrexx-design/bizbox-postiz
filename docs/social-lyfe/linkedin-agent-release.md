@@ -74,8 +74,8 @@ entry point. No database rollback is involved.
 
 ## Validation status
 
-The 17 focused checks pass, including production provider methods, real scope
-validation, rendered navigation, three redirect routes, native server sanitizer
+The 18 focused checks pass, including production provider methods, real scope
+validation, admin/member navigation, three redirect routes, native server sanitizer
 loading and actual Nest HTTP disabled responses. Vite production build and 34
 navigation/owner-access/room API tests pass for the companion destination change;
 its 390 x 844 Chromium and WebKit browser checks also pass.
