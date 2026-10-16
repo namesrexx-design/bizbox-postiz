@@ -1,14 +1,14 @@
 {
   "task": "9198 / 2452 / 2519",
   "baselineRevision": "d78e598b6117607d24cd0465f98639241c107571",
-  "source": "W1 read-only capture of Claude8905 Live hotpatch, 2026-10-16; no Live writes",
+  "source": "Six SVG/PNG public assets copied byte-for-byte from W1 read-only Claude8905 Live capture; favicon.ico is a deterministic size derivative of the unchanged embedded Live master.",
   "master": "Existing 256x256 JPEG embedded in Live logo.svg; copied byte-for-byte, not regenerated or upscaled",
   "assets": {
     "logo.svg": "7c8f7b5ab4290875204a104e3383b3c3ced9d27e34d90a7c8311e45b99c69e6a",
     "logo-text.svg": "c0c037f0744ac28570355fdfeff330929d0e85988ec6200699cd1f0735ca3168",
     "postiz.svg": "7c8f7b5ab4290875204a104e3383b3c3ced9d27e34d90a7c8311e45b99c69e6a",
     "postiz-text.svg": "c0c037f0744ac28570355fdfeff330929d0e85988ec6200699cd1f0735ca3168",
-    "favicon.ico": "b10d127281e19bf9918df06bc192fd2fb29e19a8ebc8f4c6104d6740094caa8b",
+    "favicon.ico": "12105afbc5077ecbaed11456fdf583493af0effa263464ccd8b36b8698059cc7",
     "favicon.png": "9068fcc2f414efc6ec7061862f9e732a81733aa3dd39612f7d9c902a74da8d50",
     "postiz-fav.png": "9068fcc2f414efc6ec7061862f9e732a81733aa3dd39612f7d9c902a74da8d50"
   },
@@ -16,7 +16,21 @@
     "nav": "apps/frontend/src/components/new-layout/logo.tsx -> /logo.svg",
     "login": "apps/frontend/src/components/ui/logo-text.component.tsx -> /logo.svg",
     "preview": "apps/frontend/src/app/(app)/(preview)/p/[id]/page.tsx -> /logo.svg",
-    "favicon": "App, extension and provider layouts all use exact Live /favicon.png. Apple-touch also uses that PNG. Legacy favicon.ico is preserved byte-for-byte as history; Live still contains the old Postiz ICO."
+    "favicon": "All layout links use exact Live bear/bull favicon.png; implicit /favicon.ico requests receive the derived bear/bull ICO. Apple-touch also uses exact Live PNG."
   },
-  "preservation": "Old social-lyfe PNG masters and legacy Live ICO retained unmodified. Current component links use the bear/bull SVG or PNG. All remaining application/schema/provider/source-download code matches reviewed d78. No compiler/browser/live write/OAuth/database/infrastructure changes."
+  "preservation": "Prior cloud PNG masters and original Live Postiz ICO are retained. All remaining provider/schema/Agent/source-download code matches reviewed d78. No compiler/browser/live write/OAuth/database/infrastructure changes.",
+  "icoDerivation": {
+    "script": "deploy/lyfe-social/refresh-brand-icons.py",
+    "source": "apps/frontend/public/logo.svg embedded JPEG, unchanged 256x256",
+    "sizes": [
+      16,
+      32,
+      48,
+      64,
+      128,
+      256
+    ],
+    "preservedOriginal": "docs/social-lyfe/originals/favicon-live-before-9198.ico",
+    "originalSha256": "b10d127281e19bf9918df06bc192fd2fb29e19a8ebc8f4c6104d6740094caa8b"
+  }
 }
