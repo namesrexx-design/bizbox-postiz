@@ -61,3 +61,15 @@ code: `POSTIZ_REVIEW_MEMORY_LIMIT=4608m POSTIZ_REVIEW_HEAP_MB=3072` selects a
 4.5 GiB cap and 3 GiB heap. The private launch guard requires another 512 MiB
 of host headroom before starting. A 5 GiB-cap launch was skipped when only
 5.19 GiB was available; no compiler started for that gated attempt.
+
+## Next 16.3.1 Google font URL guard
+
+A later compile failed in Next's Google font loader when its final-extension
+regex returned null. The isolated real loader succeeds for both existing Jakarta
+font configurations; no replacement font or mocked font response is used.
+`build-tools/patch-next-font.cjs` guards the exact installed Next 16.3.1 loader
+expression inside the disposable container. The helper parses filename extensions
+from the URL pathname and detects WOFF/WOFF2 signatures for extensionless query
+URLs. Unknown payloads still fail with their source URL. The downloaded bytes
+and font appearance are preserved; Next's installed MIT licence remains intact.
+The exact patch and helper are included here with the corresponding build setup.
