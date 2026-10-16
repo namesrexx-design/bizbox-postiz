@@ -14,7 +14,7 @@ This task produces source, a frontend preview and phone QA. The full release ima
 
 Pin the exact reviewed release commit (including w2 changes only after their own review). PR #3 overlaps the three `/agents` page/layout files: the combined revision must retain this PR's LYFE Social metadata and PR #3's owner-room redirects. Validate the combined frontend and backend, not either PR in isolation. The branding code reviewed here begins at `288dd5a746b951044ce2bf9ccea535ad1ece38f3`; use the final approved release revision rather than a floating branch. Recheck the baseline above and stop if it drifts.
 
-Export that revision as `source/` in an isolated build context. Build with the checked-in `deploy/lyfe-social/Dockerfile.review`, the same revision as `RELEASE_REV`, and `NEXT_PUBLIC_SOURCE_CODE_URL=https://github.com/namesrexx-design/bizbox-postiz/tree/<full-reviewed-revision>`. The recipe checks the dependency lock and rebuilds frontend, backend and orchestrator; the email changes need all relevant processes rebuilt. No dependency install or database operation runs.
+Export that revision as `source/` in an isolated build context. Build with the checked-in `deploy/lyfe-social/Dockerfile.review`, the same revision as `RELEASE_REV`, and `NEXT_PUBLIC_SOURCE_CODE_URL=https://github.com/namesrexx-design/bizbox-postiz/tree/<full-reviewed-revision>`. The recipe checks the dependency lock, regenerates Prisma 6.5's client from that exact schema inside the new image, and rebuilds frontend, backend and orchestrator; the email changes need all relevant processes rebuilt. Client generation uses a dummy local URL and does not connect to or change a database. No dependency install runs.
 
 ```sh
 docker build --network=bridge --cpuset-cpus=0,1 --memory=5g \
@@ -24,7 +24,9 @@ docker build --network=bridge --cpuset-cpus=0,1 --memory=5g \
   -t bizbox-postiz:lyfe-social-2452 "$RELEASE_CONTEXT"
 ```
 
-Run that build under the shared heavy-job lock and test the full image in an isolated stack with test data and outbound sends disabled before a release window. Check app/backend/orchestrator startup, authenticated calendar/settings/media, email rendering and source links. The current branding preview is frontend-only and does not certify this full-service release recipe.
+Run that build with sufficient reserved RAM under the shared heavy-job lock and test the full image in an isolated stack with test data and outbound sends disabled before a release window. Check app/backend/orchestrator startup, authenticated calendar/settings/media, email rendering and source links. The current branding preview is frontend-only and does not certify this full-service release recipe. The lock shim permits three simultaneous jobs; reserve its three slots when exclusive capacity is required, as coordinated by the lead.
+
+The main-based schema includes fields absent from the cached v2.25.0 schema (`Integration.customName`, `Post.batchId`). Read-only release review must establish that the Live database is compatible with the combined application before any app replacement. Generating the client does not establish database compatibility or authorize a schema push.
 
 Store the finished image archive in StorageBox, preserve the original image, and transfer/load only the reviewed image on Live Studio. Preserve original compose and `.env` privately; no secrets enter Git. Configure `EMAIL_FROM_NAME="LYFE Social"` through the existing secret setter at release time; keep the old value for rollback. Capture connected-channel and scheduled/draft state privately and choose a window clear of publication deadlines.
 
