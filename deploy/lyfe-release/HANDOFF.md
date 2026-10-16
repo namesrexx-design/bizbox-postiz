@@ -156,7 +156,14 @@ Corrected PR7 source/archive/context/build arguments and grant remain unchanged.
 
 The final published phase runbook also mirrors full frontend/Prisma preservation
 inputs, separate relay starts/stops for baseline/candidate/restored and final
-owned-service cleanup. Private input references select W1's captured work-volume
-fixture; corrected PR7 image output and private snapshot archive retain the PR7
-namespace so the older d78 result/snapshot is preserved. No private bytes are
+owned-service cleanup. Writable captures, private snapshots and relay phase output each select fresh
+PR7 directories and refuse existing output on retry. A separate captured-input
+reference reads only W1's frontend/Prisma archives; capture redirects never target
+W1 inputs. The corrected image/archive namespace and retained d78 originals are
+preserved. No private bytes are
 copied into this repository.
+
+Follow-up CHECK10430 path correction preserves the exact accepted relay/helper
+bytes. All baseline/candidate/restored starts use one guarded runbook function
+and one fresh PR7 phase directory; it refuses existing JSON/log records. A retry
+must reconcile retained partial output rather than overwrite it.

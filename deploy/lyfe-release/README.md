@@ -105,10 +105,13 @@ fixture restores the existing schema into a new isolated test DB; it does not
 change Live or apply a new candidate schema.
 
 ```sh
+set -euC
 umask 077
-PRIVATE=/mnt/work/2452-release/w1/private-rehearsal
-mkdir -p "$PRIVATE"
-chmod 700 "$PRIVATE"
+PRIVATE=/mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output/private-rehearsal
+readonly CAPTURED_INPUT=/mnt/work/2452-release/w1/private-rehearsal
+mkdir -p "$(dirname "$PRIVATE")"
+# Existing output, including a partial failed capture, requires reconciliation.
+mkdir -m 700 "$PRIVATE" || exit 1
 ssh root@2.28.123.22 'docker exec postiz-postgres sh -c '\''exec pg_dump --schema-only --no-owner --no-acl -U "$POSTGRES_USER" -d "$POSTGRES_DB"'\''' > "$PRIVATE/schema.sql"
 # The mounted file must be readable by the isolated postgres UID; parent stays 0700.
 chmod 644 "$PRIVATE/schema.sql"
@@ -116,6 +119,11 @@ PROVIDER=/app/apps/backend/dist/libraries/nestjs-libraries/src/integrations/soci
 ssh root@2.28.123.22 "docker exec postiz cat '$PROVIDER'" > "$PRIVATE/linkedin.current.js"
 ssh root@2.28.123.22 "docker exec postiz cat '$PROVIDER.bak-20261016'" > "$PRIVATE/linkedin.bak-20261016"
 ```
+
+Run these steps in the same operator shell. Writable captures and phase output
+use new PR7 directories and refuse an existing directory/record on retry. The
+W1 captured-input reference is used only for the frontend/Prisma tar reads;
+no command redirects into it. Preserve any partial output for reconciliation.
 
 Verify the active provider SHA256 is
 `b603943dbf2e33442d07888cb37b913edc65a606baad4fcf4bdff72b72683e74`;
@@ -129,8 +137,8 @@ export REHEARSAL_SCHEMA_SQL="$PRIVATE/schema.sql"
 docker compose -f compose.rehearsal.yml config --quiet
 docker compose -f compose.rehearsal.yml up -d postgres redis temporal-postgresql temporal smtp
 docker compose -f compose.rehearsal.yml create baseline
-docker cp - lyfe2452-baseline:/app/apps/frontend < "$PRIVATE/live-post-hotpatch-frontend.tar"
-docker cp - lyfe2452-baseline:/app/node_modules/.prisma < "$PRIVATE/live-post-hotpatch-prisma.tar"
+docker cp - lyfe2452-baseline:/app/apps/frontend < "$CAPTURED_INPUT/live-post-hotpatch-frontend.tar"
+docker cp - lyfe2452-baseline:/app/node_modules/.prisma < "$CAPTURED_INPUT/live-post-hotpatch-prisma.tar"
 docker cp "$PRIVATE/linkedin.current.js" "lyfe2452-baseline:$PROVIDER"
 docker cp "$PRIVATE/linkedin.bak-20261016" "lyfe2452-baseline:$PROVIDER.bak-20261016"
 docker compose -f compose.rehearsal.yml start baseline
@@ -159,9 +167,25 @@ inactive. Keep the app attached only to the internal network and run the guarded
 host TCP relay after each app starts:
 
 ```sh
-REHEARSAL_OUTPUT=/mnt/work/2452-release/w1
-node loopback-proxy.cjs lyfe2452-baseline "$REHEARSAL_OUTPUT" > "$REHEARSAL_OUTPUT/baseline-relay.log" 2>&1 &
-BASELINE_RELAY_PID=$!
+readonly REHEARSAL_OUTPUT=/mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output/phase-output
+mkdir -p "$(dirname "$REHEARSAL_OUTPUT")"
+# Never reuse a directory containing retained phase records.
+mkdir -m 700 "$REHEARSAL_OUTPUT" || exit 1
+start_rehearsal_relay() {
+  phase=$1
+  case "$phase" in baseline|candidate|restored) ;; *) return 1 ;; esac
+  if [ -e "$REHEARSAL_OUTPUT/lyfe2452-$phase-proxy.json" ] || [ -e "$REHEARSAL_OUTPUT/$phase-relay.log" ]; then
+    echo "Relay phase already recorded; reconcile before retry" >&2
+    return 1
+  fi
+  (
+    set -C
+    exec node loopback-proxy.cjs "lyfe2452-$phase" "$REHEARSAL_OUTPUT" > "$REHEARSAL_OUTPUT/$phase-relay.log" 2>&1
+  ) &
+  RELAY_PID=$!
+}
+start_rehearsal_relay baseline || exit 1
+BASELINE_RELAY_PID=$RELAY_PID
 ```
 
 The relay validates the running rehearsal name, single internal attachment and
@@ -183,18 +207,17 @@ healthy `/auth/login`, `/api/auth/can-register` and orchestrator
 `http://127.0.0.1:3002/health/status`, preserve its complete writable layer:
 
 ```sh
+PRIVATE_ARCHIVE=/mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output/private-snapshot
+mkdir -m 700 "$PRIVATE_ARCHIVE" || exit 1
 ROLLBACK_IMAGE=$(docker commit lyfe2452-baseline lyfe2452-private:baseline)
-PRIVATE_ARCHIVE=/mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output/private-rehearsal
-mkdir -p "$PRIVATE_ARCHIVE"
-chmod 700 "$PRIVATE_ARCHIVE"
 docker image save "$ROLLBACK_IMAGE" > "$PRIVATE_ARCHIVE/isolated-baseline.private.tar"
 docker stop lyfe2452-baseline
 python3 stop-loopback-proxy.py lyfe2452-baseline "$REHEARSAL_OUTPUT"
 RELEASE_IMAGE=$(cat /mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output/release-image.id)
 python3 rehearsal-clone.py --source lyfe2452-baseline --image "$RELEASE_IMAGE" --name lyfe2452-candidate --execute
 docker start lyfe2452-candidate
-node loopback-proxy.cjs lyfe2452-candidate "$REHEARSAL_OUTPUT" > "$REHEARSAL_OUTPUT/candidate-relay.log" 2>&1 &
-CANDIDATE_RELAY_PID=$!
+start_rehearsal_relay candidate || exit 1
+CANDIDATE_RELAY_PID=$RELAY_PID
 ```
 
 The helper refuses Live names, external networks, host binds, non-synthetic DB
@@ -258,8 +281,8 @@ docker stop lyfe2452-candidate
 python3 stop-loopback-proxy.py lyfe2452-candidate "$REHEARSAL_OUTPUT"
 python3 rehearsal-clone.py --source lyfe2452-baseline --image "$ROLLBACK_IMAGE" --name lyfe2452-restored --rollback --execute
 docker start lyfe2452-restored
-node loopback-proxy.cjs lyfe2452-restored "$REHEARSAL_OUTPUT" > "$REHEARSAL_OUTPUT/restored-relay.log" 2>&1 &
-RESTORED_RELAY_PID=$!
+start_rehearsal_relay restored || exit 1
+RESTORED_RELAY_PID=$RELAY_PID
 ```
 
 Read back both provider fingerprints in `lyfe2452-restored`, all three stable app
