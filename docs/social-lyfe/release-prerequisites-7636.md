@@ -133,6 +133,15 @@ retiring only cleared generated files. This task authorizes inventory/review,
 not execution of additional moves. A proposed set smaller than the measured target
 must not be represented as sufficient recovery.
 
+Update #7873: onboarding #7824 authorizes no new moves. Its #7897 assigns a
+finished-output inventory to onboarding-w2 with onboarding-w1 pre-move CHECK;
+w2 has requested the exact proposal. The [concrete Social inventory and scope](release-capacity-scope-7873.md)
+finds at most 1.26 GiB across ten known generated-output paths, before exclusions;
+only a roughly 15 MiB failed backend output is proposed to w3. This cannot clear
+the capacity gate. No new archive, prune or container change is authorized.
+Claude was asked in Main #7891 to resolve #480's author hold using the existing
+companion review and approved card; no merge/publication is claimed by that request.
+
 These are the immediate **read-only** operator commands; they can run while the
 owner prepares the exact capacity proposal:
 
