@@ -6,7 +6,7 @@ services:
     container_name: lyfe2452-baseline
     pull_policy: never
     entrypoint: []
-    command: [sh, -c, "nginx && pnpm --filter postiz-frontend --filter postiz-backend --filter postiz-orchestrator --parallel run pm2 && pm2 logs"]
+    command: [sh, -c, "nginx && pm2 ping && pnpm --filter postiz-frontend run pm2 && pnpm --filter postiz-backend run pm2 && pnpm --filter postiz-orchestrator run pm2 && pm2 logs"]
     mem_limit: 4608m
     memswap_limit: 4608m
     cpus: 2
@@ -14,6 +14,7 @@ services:
     environment:
       MAIN_URL: http://127.0.0.1:4052
       FRONTEND_URL: http://127.0.0.1:4052
+      NEXT_PUBLIC_BACKEND_URL: http://127.0.0.1:4052/api
       BACKEND_INTERNAL_URL: http://127.0.0.1:3000
       JWT_SECRET: synthetic-rehearsal-no-live-sessions
       DATABASE_URL: postgresql://rehearsal:synthetic-only@postgres:5432/rehearsal

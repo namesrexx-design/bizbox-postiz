@@ -11,7 +11,7 @@ Accepted integration base: `92b0cc04736e5bcc692dd0b25499856c1059c52b`.
 The bounded changes are the application/archive/context/source URL pins, separate
 build output/tag/slot grant, matching build.args, integration verification and
 this handoff. `create-app-only.py`, isolation checks and the original preparation
-tests retain accepted bytes. The rehearsal helper changes only REV. Follow-up
+tests retain accepted bytes. The rehearsal helper preserves its accepted isolation/environment logic and repins REV. Follow-up 10149/10164 also applies the reviewed rehearsal startup correction below. Follow-up
 9840 changes only Temporal's dynamic-config path in compose to
 `config/dynamicconfig/docker.yaml` and refreshes its manifest checksum. The pinned
 Temporal image contains that file; `development-sql.yaml` is absent. The active
@@ -115,3 +115,17 @@ effective env, networks, config/uploads volumes, stored channels and queues.
 Never run root pm2/schema push or migrations. Private Live snapshots stay
 root-only on Live. Outputs remain under `/mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output`;
 the full image, actual startup/email/rollback and Live cutover have not run.
+
+## Rehearsal startup follow-up 10149 / 10164
+
+W3's actual baseline startup CHECK found the missing public API URL and fresh
+PM2 daemon races. The future rehearsal baseline now supplies
+`NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:4052/api`. Both baseline Compose and
+`rehearsal-clone.py` initialize one daemon with `pm2 ping`, then start frontend,
+backend and orchestrator sequentially before following PM2 logs, as requested
+in W3's [actual startup findings](https://github.com/namesrexx-design/bizbox-postiz/pull/5#issuecomment-6208854175).
+The external production `create-app-only.py` remains the exact separately pinned
+operator extraction; this bounded rehearsal correction does not amend its
+production provenance or grant Live execution. Application source/archive, d78
+image, corrected PR7 source pins and both grant scopes are unchanged. W1 alone
+executes actual startup/phone/queue/rollback acceptance under its scoped grant.
