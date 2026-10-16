@@ -1,0 +1,34 @@
+{
+  "application_revision": "d78e598b6117607d24cd0465f98639241c107571",
+  "source_archive_sha256": "92f4c75a7c38cfd1ba7e0f3b0231d0a8336ac8c6e2b68ff68136a58ae4b918e1",
+  "preparation_revision": "23cc99fad5d26568a8402e22197c9aeebef58320",
+  "operator_revision": "833fd239532891b2c41dac022850c891b90d47b3",
+  "operator_path": "docs/social-lyfe/operator-handoff-2519.md",
+  "approval": "appr_mvabgkmsa61a518f",
+  "files_sha256": {
+    "guarded-build.py": "a0b46c7c7ad9c8dce1f9f279e4d9d558c726ae7458adbd3c43f785ecf3c08bea",
+    "rehearsal-clone.py": "214a1f71f9a95fef656d04b2be1f3751b384e4a6a60cecbd77df36b596a51be2",
+    "compose.rehearsal.yml": "c62f360c99b8b41ea6d23f321075a4df10ae1e10a51a7b7f516f20ffd6547ef0",
+    "test-preparation.py": "976164e077e6838445edb2ed0b2320e2f74fb4edbdf02f0d5804f9e519af318b",
+    "README.md": "20059574fb745a4e0c02441cc8526bc53fb032ae4bedc9257327ebb4ef0e3815",
+    "create-app-only.py": "607d57bfa10fce01bb45666d3f2ec1d8d47ef9af3f0ad8a51076118f7096a249",
+    "temporal.dynamicconfig.yml": "d96e989241bcc4948aaea0f429b6281e6c5fb6ba5a56b14271abee80c5a3a4a2",
+    "loopback-proxy.cjs": "feec02dfc7c0a4170d75998b9b4b9f886b522197a802e3c02409be04e0cd97dc",
+    "stop-loopback-proxy.py": "7d9a51594db46dcb6280691f6a3c39da144ce4a20280342d4ff74ac238e1aaa3"
+  },
+  "runtime_recipe_correction": {
+    "scope": "Temporal dynamic config path and installed Compose create syntax only",
+    "temporal_config": "config/dynamicconfig/docker.yaml",
+    "baseline_create": "docker compose -f compose.rehearsal.yml create baseline",
+    "application_revision_unchanged": true,
+    "status": "W3 actual startup and rollback CHECK PASS"
+  },
+  "runtime_startup_correction": {
+    "public_api_env": "synthetic loopback only",
+    "startup": "initialize PM2 once, then sequential frontend/backend/orchestrator package starts",
+    "temporal": "skip auto-setup examples; Live-matching static config; fresh isolated Temporal persistence",
+    "loopback": "host-only TCP relay; no extra app network or external egress",
+    "operator_env_merge": "unchanged from accepted helper; startup command superseded",
+    "status": "W3 actual candidate/source/email/phone/full232 rollback/state CHECK PASS; all owned processes exited and three slots released 2026-10-16T06:04:15Z"
+  }
+}
