@@ -12,7 +12,7 @@ This task produces source, a frontend preview and phone QA. The full release ima
 
 ## Prepare on Production, after release review
 
-Pin the exact reviewed release commit (including w2 changes only after their own review). The branding code reviewed here begins at `288dd5a746b951044ce2bf9ccea535ad1ece38f3`; use the final approved release revision rather than a floating branch. Recheck the baseline above and stop if it drifts.
+Pin the exact reviewed release commit (including w2 changes only after their own review). PR #3 overlaps the three `/agents` page/layout files: the combined revision must retain this PR's LYFE Social metadata and PR #3's owner-room redirects. Validate the combined frontend and backend, not either PR in isolation. The branding code reviewed here begins at `288dd5a746b951044ce2bf9ccea535ad1ece38f3`; use the final approved release revision rather than a floating branch. Recheck the baseline above and stop if it drifts.
 
 Export that revision as `source/` in an isolated build context. Build with the checked-in `deploy/lyfe-social/Dockerfile.review`, the same revision as `RELEASE_REV`, and `NEXT_PUBLIC_SOURCE_CODE_URL=https://github.com/namesrexx-design/bizbox-postiz/tree/<full-reviewed-revision>`. The recipe checks the dependency lock and rebuilds frontend, backend and orchestrator; the email changes need all relevant processes rebuilt. No dependency install or database operation runs.
 
@@ -27,6 +27,8 @@ docker build --network=bridge --cpuset-cpus=0,1 --memory=5g \
 Run that build under the shared heavy-job lock and test the full image in an isolated stack with test data and outbound sends disabled before a release window. Check app/backend/orchestrator startup, authenticated calendar/settings/media, email rendering and source links. The current branding preview is frontend-only and does not certify this full-service release recipe.
 
 Store the finished image archive in StorageBox, preserve the original image, and transfer/load only the reviewed image on Live Studio. Preserve original compose and `.env` privately; no secrets enter Git. Configure `EMAIL_FROM_NAME="LYFE Social"` through the existing secret setter at release time; keep the old value for rollback. Capture connected-channel and scheduled/draft state privately and choose a window clear of publication deadlines.
+
+Registration currently retains upstream `postiz.com` Terms/Privacy links. The lead/Counsel must supply operator-approved policy URLs and review that registration flow before release; this branding task does not invent or replace legal terms.
 
 ## App-only release command, after separate authorization
 
