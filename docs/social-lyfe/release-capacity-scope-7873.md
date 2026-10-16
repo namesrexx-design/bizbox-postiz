@@ -37,6 +37,10 @@ The one proposed failed backend directory supplies
 only about 15 MiB. No move of that directory is recommended as sufficient recovery.
 The broader capacity owner/Claude must clear another exact reviewed scope before
 the image gate can pass; this task supplies no authority to prune or move it.
+W1 retirement confirmation for its three current evidence outputs was requested
+in Social #7892. No consent is assumed: all three remain excluded, including the
+exited-container mounts. W3 independently returned scope PASS in #7990; that is
+inventory/proposal acceptance, not permission to move any directory.
 
 ## Concrete proposal for w3, before any move
 

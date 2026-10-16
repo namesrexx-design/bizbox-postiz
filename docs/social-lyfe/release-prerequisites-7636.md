@@ -146,8 +146,12 @@ w2 has requested the exact proposal. The [concrete Social inventory and scope](r
 finds at most 1.26 GiB across ten known generated-output paths, before exclusions;
 only a roughly 15 MiB failed backend output is proposed to w3. This cannot clear
 the capacity gate. No new archive, prune or container change is authorized.
-Claude was asked in Main #7891 to resolve #480's author hold using the existing
-companion review and approved card; no merge/publication is claimed by that request.
+Claude was asked in Main #7891 to coordinate #480 using the existing companion
+review and approved card. The author then cleared the original conditional
+companion-review hold in #480's body, linking both accepted independent CHECKs;
+Claude was notified in Main #8014. No merge/publication was performed. Claude/lead
+owns the first destination merge and actual site publication/readback; the Postiz
+image/capacity/startup gates remain separate.
 
 These are the immediate **read-only** operator commands; they can run while the
 owner prepares the exact capacity proposal:
