@@ -16,7 +16,7 @@
     "nav": "apps/frontend/src/components/new-layout/logo.tsx -> /logo.svg",
     "login": "apps/frontend/src/components/ui/logo-text.component.tsx -> /logo.svg",
     "preview": "apps/frontend/src/app/(app)/(preview)/p/[id]/page.tsx -> /logo.svg",
-    "favicon": "/favicon.png and /favicon.ico; apple-touch icon uses exact Live favicon.png"
+    "favicon": "App, extension and provider layouts all use exact Live /favicon.png. Apple-touch also uses that PNG. Legacy favicon.ico is preserved byte-for-byte as history; Live still contains the old Postiz ICO."
   },
-  "preservation": "Old social-lyfe PNG masters retained unmodified for history; no current component references them. All remaining application/schema/provider/source-download files match reviewed d78. No compiler/browser/live write/OAuth/database/infrastructure changes."
+  "preservation": "Old social-lyfe PNG masters and legacy Live ICO retained unmodified. Current component links use the bear/bull SVG or PNG. All remaining application/schema/provider/source-download code matches reviewed d78. No compiler/browser/live write/OAuth/database/infrastructure changes."
 }
