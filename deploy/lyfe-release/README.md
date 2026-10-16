@@ -125,7 +125,7 @@ channel row, schedule, queue or whole Live container snapshot is copied here.
 export REHEARSAL_SCHEMA_SQL="$PRIVATE/schema.sql"
 docker compose -f compose.rehearsal.yml config --quiet
 docker compose -f compose.rehearsal.yml up -d postgres redis temporal-postgresql temporal smtp
-docker compose -f compose.rehearsal.yml create --no-deps baseline
+docker compose -f compose.rehearsal.yml create baseline
 docker cp "$PRIVATE/linkedin.current.js" "lyfe2452-baseline:$PROVIDER"
 docker cp "$PRIVATE/linkedin.bak-20261016" "lyfe2452-baseline:$PROVIDER.bak-20261016"
 docker compose -f compose.rehearsal.yml start baseline
@@ -133,6 +133,10 @@ docker compose -f compose.rehearsal.yml start baseline
 
 These commands create only `lyfe2452-*` resources, an **internal** Docker network,
 new synthetic DB/Redis/Temporal queues and fresh named config/uploads volumes.
+The pinned Temporal 1.28.1 image supplies `config/dynamicconfig/docker.yaml`;
+`development-sql.yaml` is absent and makes the server exit before readiness.
+The baseline has no `depends_on`, so `compose create baseline` selects only that
+app; the installed Compose CLI does not accept `create --no-deps`.
 Only app port `127.0.0.1:4052` is published. SMTP is a non-relaying Mailpit sink
 with synthetic credentials; no external email/social/provider secrets are used.
 Never combine this file with Live compose or join any existing network. Verify

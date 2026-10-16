@@ -8,9 +8,16 @@
   "files_sha256": {
     "guarded-build.py": "a0b46c7c7ad9c8dce1f9f279e4d9d558c726ae7458adbd3c43f785ecf3c08bea",
     "rehearsal-clone.py": "40d39f876daa6d9c7b0496d746ebc3f07fed10bef40eae2d8767201e8bc5dd6a",
-    "compose.rehearsal.yml": "7baffeb998593daff07a4078ccead79eb8a7cfb87113ac0862ec866baaee74d3",
+    "compose.rehearsal.yml": "595ed4e771e0b1481244b1889c2fa954ab5b02558ac0a3031d70a167d01a343b",
     "test-preparation.py": "976164e077e6838445edb2ed0b2320e2f74fb4edbdf02f0d5804f9e519af318b",
-    "README.md": "67098856270d9d71c00a1839dd45defb19c0fffd6d46aabedda12f7fdb3ae872",
+    "README.md": "2c66b68647d6d59010a82e296fd9900f75b9a0a1982652a4aac1393b020dc56a",
     "create-app-only.py": "9cc4a78f737868617a02b863f69bfb05cca9a65eb01b521ebd64405efa722363"
+  },
+  "runtime_recipe_correction": {
+    "scope": "Temporal dynamic config path and installed Compose create syntax only",
+    "temporal_config": "config/dynamicconfig/docker.yaml",
+    "baseline_create": "docker compose -f compose.rehearsal.yml create baseline",
+    "application_revision_unchanged": true,
+    "status": "W3 CHECK requested; actual application startup and rollback remain open"
   }
 }
