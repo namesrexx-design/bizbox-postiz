@@ -1,0 +1,11 @@
+{
+  "checked": {
+    "models": 85,
+    "columns": 989,
+    "indexes": 262,
+    "enums": 11
+  },
+  "matchesComparedMetadata": true,
+  "differences": {},
+  "limits": "Metadata only; compares declared index column order/uniqueness, not index predicates/operator classes or foreign-key actions. No row reads, application startup or database mutation."
+}

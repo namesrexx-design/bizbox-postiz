@@ -1,9 +1,11 @@
 # Release recipe only. Build the reviewed full source; never reuse an old frontend payload.
 FROM ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
 ARG RELEASE_REV
-# W1 supplies the verified signed-in source-tarball URL for this exact revision.
+ARG RELEASE_SOURCE_SHA256
+# prepare-release-context.sh supplies the matching signed-in download URL.
 ARG NEXT_PUBLIC_SOURCE_CODE_URL
 ENV NEXT_PUBLIC_SOURCE_CODE_URL=$NEXT_PUBLIC_SOURCE_CODE_URL
+ENV RELEASE_SOURCE_REVISION=$RELEASE_REV
 ENV NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production IS_GENERAL=true STORAGE_PROVIDER=local
 ENV FRONTEND_URL=https://social.biz-box.io MAIN_URL=https://social.biz-box.io
 ENV NEXT_PUBLIC_BACKEND_URL=https://social.biz-box.io/api
@@ -12,7 +14,11 @@ WORKDIR /app
 # Keep the lock-matching installed dependencies; no install/postinstall or migration.
 RUN rm -rf /app/apps /app/libraries /app/dist
 COPY source/ /app/
-RUN test -n "$RELEASE_REV" && test -n "$NEXT_PUBLIC_SOURCE_CODE_URL" \
+COPY source-archive.tar.gz /usr/src/lyfe-social-source.tar.gz
+RUN echo "$RELEASE_REV" | grep -Eq '^[a-f0-9]{40}$' \
+    && echo "$RELEASE_SOURCE_SHA256" | grep -Eq '^[a-f0-9]{64}$' \
+    && test "$NEXT_PUBLIC_SOURCE_CODE_URL" = "https://social.biz-box.io/api/source/$RELEASE_REV.tar.gz" \
+    && echo "$RELEASE_SOURCE_SHA256  /usr/src/lyfe-social-source.tar.gz" | sha256sum -c - \
     && echo 'a80b52413e65fc53791524120ef4fa300a2815020885961801ebed02cf9f1fee  pnpm-lock.yaml' | sha256sum -c - \
     && DATABASE_URL=postgresql://preview:preview@127.0.0.1:1/preview node_modules/.bin/prisma generate --schema libraries/nestjs-libraries/src/database/prisma/schema.prisma \
     && node deploy/lyfe-social/build-tools/patch-next-font.cjs \
