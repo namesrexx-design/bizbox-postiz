@@ -159,11 +159,14 @@ app and retains the original. **It merges new image environment defaults with ol
 runtime values, then takes release-source settings from the new image.** The
 earlier handoff copied old `Config.Env` directly, dropping the new image's
 `RELEASE_SOURCE_REVISION` and causing authenticated source download to return 503.
-Apply the same merge order to the production create payload before cutover.
+The same merge order is now applied in
+[PR3's complete runnable production handoff](https://github.com/namesrexx-design/bizbox-postiz/blob/833fd239532891b2c41dac022850c891b90d47b3/docs/social-lyfe/operator-handoff-2519.md).
+Use that corrected handoff instead of its historical copy in the unchanged d78
+archive.
 
-In PR3's existing `create-app-only.py`, immediately after its `payload.update`,
-replace the inherited `Env` with the following. This adds no Live write during
-preparation; it changes the future create request only. The regression in
+The equivalent replacement for an older `create-app-only.py`, immediately after
+its `payload.update`, is below. This adds no Live write during preparation; it
+changes the future create request only. The regression in
 `test-preparation.py` exercises this same merge order for forward and rollback.
 
 ```python
