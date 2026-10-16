@@ -1,12 +1,10 @@
 import { Metadata } from 'next';
-import { Agent } from '@gitroom/frontend/components/agents/agent';
-import { AgentChat } from '@gitroom/frontend/components/agents/agent.chat';
+import { redirect } from 'next/navigation';
+import { OWNER_SOCIAL_ROOM_URL } from '@gitroom/frontend/components/agents/owner.social.room';
 export const metadata: Metadata = {
   title: 'Postiz - Agent',
   description: '',
 };
 export default async function Page() {
-  return (
-    <AgentChat />
-  );
+  redirect(OWNER_SOCIAL_ROOM_URL);
 }
