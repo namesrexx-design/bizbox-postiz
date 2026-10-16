@@ -108,7 +108,7 @@ change Live or apply a new candidate schema.
 
 ```sh
 umask 077
-PRIVATE=/mnt/storagebox/work/2452-release/private-rehearsal
+PRIVATE=/mnt/work/2452-release/w1/private-rehearsal
 mkdir -p "$PRIVATE"
 chmod 700 "$PRIVATE"
 ssh root@2.28.123.22 'docker exec postiz-postgres sh -c '\''exec pg_dump --schema-only --no-owner --no-acl -U "$POSTGRES_USER" -d "$POSTGRES_DB"'\''' > "$PRIVATE/schema.sql"
@@ -131,6 +131,8 @@ export REHEARSAL_SCHEMA_SQL="$PRIVATE/schema.sql"
 docker compose -f compose.rehearsal.yml config --quiet
 docker compose -f compose.rehearsal.yml up -d postgres redis temporal-postgresql temporal smtp
 docker compose -f compose.rehearsal.yml create baseline
+docker cp - lyfe2452-baseline:/app/apps/frontend < "$PRIVATE/live-post-hotpatch-frontend.tar"
+docker cp - lyfe2452-baseline:/app/node_modules/.prisma < "$PRIVATE/live-post-hotpatch-prisma.tar"
 docker cp "$PRIVATE/linkedin.current.js" "lyfe2452-baseline:$PROVIDER"
 docker cp "$PRIVATE/linkedin.bak-20261016" "lyfe2452-baseline:$PROVIDER.bak-20261016"
 docker compose -f compose.rehearsal.yml start baseline
@@ -183,8 +185,11 @@ healthy `/auth/login`, `/api/auth/can-register` and orchestrator
 `http://127.0.0.1:3002/health/status`, preserve its complete writable layer:
 
 ```sh
-ROLLBACK_IMAGE=$(docker commit --pause=true lyfe2452-baseline lyfe2452-private:baseline)
-docker image save "$ROLLBACK_IMAGE" > "$PRIVATE/isolated-baseline.private.tar"
+ROLLBACK_IMAGE=$(docker commit lyfe2452-baseline lyfe2452-private:baseline)
+PRIVATE_ARCHIVE=/mnt/storagebox/work/2452-release/private-rehearsal
+mkdir -p "$PRIVATE_ARCHIVE"
+chmod 700 "$PRIVATE_ARCHIVE"
+docker image save "$ROLLBACK_IMAGE" > "$PRIVATE_ARCHIVE/isolated-baseline.private.tar"
 docker stop lyfe2452-baseline
 python3 stop-loopback-proxy.py lyfe2452-baseline "$REHEARSAL_OUTPUT"
 RELEASE_IMAGE=$(cat /mnt/storagebox/work/2452-release/release-image.id)
