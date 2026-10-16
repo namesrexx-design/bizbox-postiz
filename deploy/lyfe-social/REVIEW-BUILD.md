@@ -49,8 +49,8 @@ a three-slot shim and does not reserve the whole host:
   nice -n 10 bash deploy/lyfe-social/build-combined-frontend.review.sh
 ```
 
-The frontend command uses 2 CPUs pinned to cores 0/1, a 4 GiB V8 heap and a 6 GiB
-container limit. The immutable source offer is set by the build to the selected
+The frontend command uses 2 CPUs pinned to cores 0/1, a 3 GiB V8 heap and a 5 GiB
+container limit after the shared-memory budget was measured. The immutable source offer is set by the build to the selected
 candidate revision. No application service or datastore starts. The build emits
 only the review frontend and logs. The isolated preview and its synthetic API
 fixture are separate; its writes are blocked. Release/rollback order remains in
