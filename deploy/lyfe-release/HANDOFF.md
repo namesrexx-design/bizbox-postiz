@@ -141,3 +141,22 @@ as an empty directory. Existing isolation, images, synthetic credentials, no-hos
 port policy and source/image pins are retained. W1 preserves failed synthetic
 Temporal state and alone owns any clean rehearsal DB setup; this proposal performs
 no database operation.
+
+## Published loopback relay lifecycle — follow-up 10327 / 10362
+
+The adjacent `loopback-proxy.cjs` and `stop-loopback-proxy.py` are exact published
+PR5 helpers from `ab589d976d3d85c26f08c474e41da11b38620fbb`. The matching README
+Temporal/startup/relay guidance is mirrored from that same revision. Start the
+relay only for the active isolated app and stop its matching recorded process
+before replacement or final cleanup. The relay does not add app network access.
+Its manifest-pinned helpers validate the app/network/loopback boundary and stop
+only the recorded matching relay. W1 alone owns the actual relay lifecycle under
+its runtime reservation; W2 validates through controlled boundaries only.
+Corrected PR7 source/archive/context/build arguments and grant remain unchanged.
+
+The final published phase runbook also mirrors full frontend/Prisma preservation
+inputs, separate relay starts/stops for baseline/candidate/restored and final
+owned-service cleanup. Private input references select W1's captured work-volume
+fixture; corrected PR7 image output and private snapshot archive retain the PR7
+namespace so the older d78 result/snapshot is preserved. No private bytes are
+copied into this repository.
