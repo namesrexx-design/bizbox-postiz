@@ -83,7 +83,7 @@ services:
       POSTGRES_SEEDS: temporal-postgresql
       ENABLE_ES: "false"
       TEMPORAL_NAMESPACE: default
-      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/docker.yaml
     networks: [isolated]
   smtp:
     image: axllent/mailpit@sha256:030f06031ce5c60913ac9363da1ab0d4be6fd2a78147dd0e1ca0fcac665d6b34

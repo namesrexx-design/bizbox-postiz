@@ -8,7 +8,7 @@
   "files_sha256": {
     "guarded-build.py": "85007a3ec4e7991893abc6fdb2eede02720f51e2e3b21a28eef0d024ccadeafb",
     "rehearsal-clone.py": "f41d6d13b311c171b5543828bad2fa18d6aa62fba4eca4f635f35ecd9053794e",
-    "compose.rehearsal.yml": "7baffeb998593daff07a4078ccead79eb8a7cfb87113ac0862ec866baaee74d3",
+    "compose.rehearsal.yml": "595ed4e771e0b1481244b1889c2fa954ab5b02558ac0a3031d70a167d01a343b",
     "test-preparation.py": "976164e077e6838445edb2ed0b2320e2f74fb4edbdf02f0d5804f9e519af318b",
     "README.md": "10776a56fdde46bcb5a815acb3343276e92d04bee98e90b867f4bf31f793632e",
     "create-app-only.py": "9cc4a78f737868617a02b863f69bfb05cca9a65eb01b521ebd64405efa722363",

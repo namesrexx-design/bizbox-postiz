@@ -10,8 +10,12 @@ PR6's source/assets/archive PASS is retained; runtime PASS is still required.
 Accepted integration base: `92b0cc04736e5bcc692dd0b25499856c1059c52b`.
 The bounded changes are the application/archive/context/source URL pins, separate
 build output/tag/slot grant, matching build.args, integration verification and
-this handoff. `create-app-only.py`, isolation checks, compose and the original
-preparation tests retain accepted bytes. The rehearsal helper changes only REV.
+this handoff. `create-app-only.py`, isolation checks and the original preparation
+tests retain accepted bytes. The rehearsal helper changes only REV. Follow-up
+9840 changes only Temporal's dynamic-config path in compose to
+`config/dynamicconfig/docker.yaml` and refreshes its manifest checksum. The pinned
+Temporal image contains that file; `development-sql.yaml` is absent. The active
+d78 preparation and W1's running inputs are not modified by this correction.
 The immutable PR6 source archive itself is unchanged; these operator files stay
 external to its authenticated source offer.
 
