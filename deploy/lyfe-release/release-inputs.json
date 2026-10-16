@@ -10,7 +10,7 @@
     "rehearsal-clone.py": "31c2c4a7590486f322904e11e4a195e2e9300930e98e31f5705220867df57622",
     "compose.rehearsal.yml": "4f2f4a3706008f88e3ddac3ab30805a16767d2c8b7d49a85e03bc49c3f7045a7",
     "test-preparation.py": "976164e077e6838445edb2ed0b2320e2f74fb4edbdf02f0d5804f9e519af318b",
-    "README.md": "5610c2d91e53fad12d89eefdf28532aa93f7cd16c3d9de52a8d00169ebad7388",
+    "README.md": "f0d49d40df4b0554e78284f6c0f3564ddd5c9c73acacae85d63ddf411cc9f387",
     "create-app-only.py": "607d57bfa10fce01bb45666d3f2ec1d8d47ef9af3f0ad8a51076118f7096a249",
     "build.args": "faa999c46cd2fe3029bbcf992abdebe060afcf161a92ee217984bfd2f29f8d4c",
     "temporal.dynamicconfig.yml": "d96e989241bcc4948aaea0f429b6281e6c5fb6ba5a56b14271abee80c5a3a4a2",
@@ -24,5 +24,16 @@
   "slot_grant": "2452-pr6-1bac9b61-three-slots",
   "status": "PROPOSED: W1 sole post-exit integration after W3 CHECK",
   "operator_startup_delta": "10247: PM2 daemon prewarm and sequential three-package startup only; accepted Env merge and remaining operator bytes retained",
-  "loopback_relay_provenance": "ab589d976d3d85c26f08c474e41da11b38620fbb: exact PR5 relay/lifecycle helpers and matching phase runbook; corrected PR7 source/image/archive namespace retained"
+  "loopback_relay_provenance": "ab589d976d3d85c26f08c474e41da11b38620fbb: exact PR5 relay/lifecycle helpers and matching phase runbook; corrected PR7 source/image/archive namespace retained",
+  "destination": {
+    "status": "PUBLISHED / W3 PASS",
+    "url": "https://biz-box.io/owner/room?room=social-media",
+    "pr": "https://github.com/namesrexx-design/bizbox/pull/480",
+    "merged_at": "2026-10-16T06:45:03Z",
+    "platform_revision": "0893533de58ca704f884fe3d911a84d3d2d68286",
+    "checkpoint_id": "6ad1c56c4de26e549df4a3c8",
+    "deployed_at": "2026-10-16T06:37:43.752Z",
+    "review_url": "https://github.com/namesrexx-design/bizbox/pull/480#issuecomment-6209738514",
+    "archive_live_studio": "/mnt/storagebox/social-media/11069-published-social-destination-check/"
+  }
 }

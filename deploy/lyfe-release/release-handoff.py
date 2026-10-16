@@ -55,9 +55,9 @@ def main():
         'canonical_runbook': str(HERE / 'HANDOFF.md'),
         'rehearsal_runbook': str(HERE / 'README.md'),
         'production_helper': str(HERE / 'create-app-only.py'),
+        'completed_destination': inputs['destination'],
         'remaining_gates': ['capacity and explicit three-slot reservation',
-                            'immutable full-app image and isolated startup/email/rollback PASS',
-                            'BizBox #480 publication and authenticated destination readback'],
+                            'immutable full-app image and isolated startup/email/rollback PASS'],
         'executor': 'social-media-w1; retain current sole release ownership',
     }, indent=2), flush=True)
     # All application starts/cutover remain explicit runbook steps. This entry
