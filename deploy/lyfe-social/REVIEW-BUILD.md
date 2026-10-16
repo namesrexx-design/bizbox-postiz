@@ -1,15 +1,16 @@
 # Combined review build
 
 Review setup for the PR2 + PR3 candidate. This is not a deployment command.
-The app source for the current compile is the `efa83fdf` candidate revision;
-these public setup files reproduce its compiler configuration and command. They
-are also included on the combined candidate branch. A final release source offer
+The script records the selected candidate revision in the source offer. These
+public setup files reproduce its compiler configuration and command and are
+included on the combined candidate branch. A final release source offer
 must point to its complete selected source, including the build setup.
 
 `next.review.config.js` is the app's Next configuration with compiler workers
 limited to one, webpack memory optimizations enabled, and browser/server/Sentry
-source maps disabled. No authentication, routing, endpoint, provider or editor
-code is substituted. The default source-map-enabled build exceeded its 6 GiB
+source maps disabled. The server loads `isomorphic-dompurify` and `jsdom` through native Node package
+resolution so their filesystem assets remain available. No authentication,
+routing, endpoint, provider, sanitizer or editor implementation is substituted. The default source-map-enabled build exceeded its 6 GiB
 container cap; the review profile's result is reported separately in PR3.
 
 Set `POSTIZ_REVIEW_SRC` and `POSTIZ_REVIEW_OUT` to the candidate source and a fresh
