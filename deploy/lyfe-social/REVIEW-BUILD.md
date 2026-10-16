@@ -24,7 +24,7 @@ writes Prisma Client 6.5.0 for the candidate schema. It cannot run a migration o
 connect to a database. The placeholder DATABASE_URL is deliberately unreachable.
 Mount the generated client at `/app/node_modules/.prisma/client` in both builds.
 
-The full backend check uses the same cached image with source mounts read-only,
+`compile-backend.review.sh` runs the full backend check with the same cached image with source mounts read-only,
 network disabled, a fresh writable backend `dist`, 2 CPUs, a 4 GiB memory cap and
 `NODE_OPTIONS=--max-old-space-size=3072`:
 

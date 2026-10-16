@@ -18,5 +18,5 @@ docker run --rm --name social-media-w2-combined-frontend --cpus=2 --cpuset-cpus=
  --mount type=bind,src="$out/generated-prisma",dst=/app/node_modules/.prisma/client,readonly \
  --workdir /app/apps/frontend "$image" -c '../../node_modules/.bin/next build --webpack' > "$out/combined-frontend-review.log" 2>&1 || frontend_status=$?
 
-printf "backend_exit=0\nfrontend_exit=%s\nreview_sourcemaps=disabled\n" "$frontend_status" > "$out/combined-build-status.txt"
+printf "frontend_exit=%s\nreview_sourcemaps=disabled\n" "$frontend_status" > "$out/combined-build-status.txt"
 exit "$frontend_status"
