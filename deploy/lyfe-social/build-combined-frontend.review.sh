@@ -2,7 +2,7 @@
 set -euo pipefail
 src=${POSTIZ_REVIEW_SRC:-/srv/lyfe/work-social-combined-2519-20261016}
 out=${POSTIZ_REVIEW_OUT:-/srv/lyfe/pods/social-media-w2}
-image=bizbox-postiz:candidate-345426c-v2.25.0
+image=ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
 frontend_status=0
 head=$(git -C "$src" rev-parse HEAD)
 docker run --rm --name social-media-w2-combined-frontend --cpus=2 --cpuset-cpus=0,1 --memory="${POSTIZ_REVIEW_MEMORY_LIMIT:-5g}" --network=bridge --entrypoint sh \

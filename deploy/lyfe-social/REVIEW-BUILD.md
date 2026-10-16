@@ -15,8 +15,9 @@ container cap; the review profile's result is reported separately in PR3.
 
 Set `POSTIZ_REVIEW_SRC` and `POSTIZ_REVIEW_OUT` to the candidate source and a fresh
 output directory. The defaults name the actual Production paths used for this
-check. The cached build image is `bizbox-postiz:candidate-345426c-v2.25.0`; its
-pnpm lock matches the fork. No production env or keys are passed into these jobs.
+check. The scripts use the publicly pullable immutable upstream image documented in
+`TOOLCHAIN.md`; its pnpm lock matches the fork. The earlier local candidate only
+overlaid frontend/source files and inherited the same compiler/dependencies. No production env or keys are passed into these jobs.
 
 Pre-create writable output directories and the ignored `.next`, `next-env.d.ts`
 and backend `dist` mountpoints. Seed `next-env.d.ts` from the same cached Next

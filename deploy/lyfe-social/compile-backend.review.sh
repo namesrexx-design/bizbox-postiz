@@ -2,7 +2,7 @@
 set -euo pipefail
 src=${POSTIZ_REVIEW_SRC:-/srv/lyfe/work-social-combined-2519-20261016}
 out=${POSTIZ_REVIEW_OUT:-/srv/lyfe/pods/social-media-w2}
-image=bizbox-postiz:candidate-345426c-v2.25.0
+image=ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
 backend_status=0
 frontend_status=0
 # Caller holds slot1, slot2, slot3 exclusively, after w1 releases its build.
