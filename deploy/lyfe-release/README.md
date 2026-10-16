@@ -93,7 +93,7 @@ Node inspection** (override entrypoint) to check:
 5. Image startup is the explicit three-package app-only command; root `pm2-run`
    remains excluded. Record the immutable image ID and results in PR3.
 
-## Isolated startup and rollback procedure (not yet executed)
+## Isolated startup and rollback procedure
 
 This rehearsal runs on **Production**, never on Live. It needs the final image,
 the same below-90%/40-GiB disk clearance, all three reserved slots, and at least

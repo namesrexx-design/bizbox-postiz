@@ -70,7 +70,7 @@ independent startup command.
 1. Use this entry point to verify/plan; build only after the resource/slot gates.
    Validate the immutable image's archive, emitted production URLs, generated
    Prisma and all three compiled apps using [the accepted image checks](README.md#exact-guarded-compiler-command).
-2. Follow [the accepted isolated rehearsal](README.md#isolated-startup-and-rollback-procedure-not-yet-executed)
+2. Follow [the accepted isolated rehearsal](README.md#isolated-startup-and-rollback-procedure)
    on Production: synthetic services only, no Live env/queue, nginx plus frontend,
    backend and orchestrator, authenticated source bytes, actual queued email to
    Mailpit, unchanged app schema and complete-image patch-preserving app rollback.
