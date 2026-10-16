@@ -45,6 +45,15 @@ const { PostsRepository } = require(path.join(library, 'database/prisma/posts/po
 const { PublicFacebookProfileController } = require(path.join(root, 'apps/backend/src/public-api/routes/v1/public.facebook.profile.controller.ts'));
 const { PublicAuthMiddleware } = require(path.join(root, 'apps/backend/src/services/auth/public.auth.middleware.ts'));
 const { Test } = require('@nestjs/testing');
+const { loadTypeScript } = require('../compatibility/load-typescript.cjs');
+const profileContract = require(path.join(library, 'facebook-profile/contract.ts'));
+const { PostsService } = loadTypeScript('libraries/nestjs-libraries/src/database/prisma/posts/posts.service.ts', {
+  '@gitroom/nestjs-libraries/facebook-profile/contract': profileContract,
+  '@gitroom/nestjs-libraries/dtos/posts/create.post.dto': require(path.join(library, 'dtos/posts/create.post.dto.ts')),
+});
+const { PublicIntegrationsController } = loadTypeScript('apps/backend/src/public-api/routes/v1/public.integrations.controller.ts', {
+  '@gitroom/nestjs-libraries/user/org.from.request': require(path.join(library, 'user/org.from.request.ts')),
+});
 
 let db, sql, profiles, repository, app, base, laneA, laneB, page;
 const orgA = 'fixture-org-a', orgB = 'fixture-org-b';
@@ -78,7 +87,18 @@ before(async () => {
   const wrapper = { model: db };
   repository = new PostsRepository(wrapper, wrapper, wrapper, wrapper, wrapper, wrapper);
   await db.organization.createMany({ data: [{ id: orgA, name: 'Fixture A' }, { id: orgB, name: 'Fixture B' }] });
-  const testing = await Test.createTestingModule({ controllers: [PublicFacebookProfileController], providers: [{ provide: FacebookProfileService, useValue: profiles }] }).compile();
+  const postsService = Object.assign(Object.create(PostsService.prototype), {
+    _facebookProfiles: profiles,
+    _integrationService: { getIntegrationById: (org, id) => db.integration.findFirst({ where: { id, organizationId: org, deletedAt: null } }) },
+    _postRepository: repository,
+    validatePosts: async () => [{ emptyContent: false, valid: true, errors: true, tooLong: false }],
+    startWorkflow: () => { throw new Error('Profile lane must never start Temporal'); },
+  });
+  const publicDependencies = Reflect.getMetadata('design:paramtypes', PublicIntegrationsController);
+  const testing = await Test.createTestingModule({ controllers: [PublicFacebookProfileController, PublicIntegrationsController], providers: [
+    { provide: FacebookProfileService, useValue: profiles },
+    ...publicDependencies.map((provide, index) => ({ provide, useValue: index === 1 ? postsService : {} })),
+  ] }).compile();
   app = testing.createNestApplication({ logger: false });
   const auth = new PublicAuthMiddleware({
     getOrgByApiKey: async key => key === 'org-a-key' ? { id: orgA } : key === 'org-b-key' ? { id: orgB } : undefined,
@@ -256,4 +276,20 @@ test('canonical module/service wiring includes auth, staging intercept, workflow
   assert.match(service, /isProfileIntegration\(getPostById.integration\)/);
   assert.match(service, /isProfileIntegration\(getPostById\?\.integration\)/);
   assert.match(service, /isProfileIntegration\(integration\)/);
+});
+
+test('existing POST /posts DTO/controller/service path stages exact PR507 draft and GET /posts reads it', async () => {
+  const b = batch('fullroute');
+  const response = await fetch(base + '/public/v1/posts', { method: 'POST', headers: { authorization: 'org-a-key', 'content-type': 'application/json' }, body: JSON.stringify(draft(b)) });
+  const payload = await response.json(); assert.equal(response.status, 201, JSON.stringify(payload));
+  assert.equal(payload.length, 1);
+  const readback = await fetch(base + '/public/v1/posts?startDate=2026-10-01&endDate=2026-12-01', { headers: { authorization: 'org-a-key' } });
+  assert.equal(readback.status, 200);
+  const post = (await readback.json()).posts.find(p => p.id === payload[0].postId);
+  assert.equal(post.content, b.items[0].caption); assert.equal(post.state, 'DRAFT');
+  assert.equal(JSON.parse(post.image)[0].path, b.items[0].mediaUrl);
+  assert.equal(JSON.parse(post.settings).bizboxFacebookProfile.digest, digest(b));
+  const changed = draft(b); changed.type = 'schedule';
+  const refused = await fetch(base + '/public/v1/posts', { method: 'POST', headers: { authorization: 'org-a-key', 'content-type': 'application/json' }, body: JSON.stringify(changed) });
+  assert.equal(refused.status, 409);
 });
