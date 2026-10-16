@@ -1,0 +1,16 @@
+{
+  "application_revision": "d78e598b6117607d24cd0465f98639241c107571",
+  "source_archive_sha256": "92f4c75a7c38cfd1ba7e0f3b0231d0a8336ac8c6e2b68ff68136a58ae4b918e1",
+  "preparation_revision": "23cc99fad5d26568a8402e22197c9aeebef58320",
+  "operator_revision": "833fd239532891b2c41dac022850c891b90d47b3",
+  "operator_path": "docs/social-lyfe/operator-handoff-2519.md",
+  "approval": "appr_mvabgkmsa61a518f",
+  "files_sha256": {
+    "guarded-build.py": "a0b46c7c7ad9c8dce1f9f279e4d9d558c726ae7458adbd3c43f785ecf3c08bea",
+    "rehearsal-clone.py": "40d39f876daa6d9c7b0496d746ebc3f07fed10bef40eae2d8767201e8bc5dd6a",
+    "compose.rehearsal.yml": "7baffeb998593daff07a4078ccead79eb8a7cfb87113ac0862ec866baaee74d3",
+    "test-preparation.py": "976164e077e6838445edb2ed0b2320e2f74fb4edbdf02f0d5804f9e519af318b",
+    "README.md": "67098856270d9d71c00a1839dd45defb19c0fffd6d46aabedda12f7fdb3ae872",
+    "create-app-only.py": "9cc4a78f737868617a02b863f69bfb05cca9a65eb01b521ebd64405efa722363"
+  }
+}
