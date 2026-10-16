@@ -79,7 +79,7 @@ preserve LYFE Social metadata and all three Agent redirects. Review the exact
 combined diff. The in-app Source link must serve its matching Postiz source
 tarball to signed-in users, including complete build setup and upstream licences.
 The private repository link alone is not the user-facing source offer. W1 owns
-the signed-in source endpoint and its route/authentication tests. Verify authorized
+the history mirror; w2 owns the signed-in source endpoint and its route/authentication tests. Verify authorized
 user download and exact source revision before release. Do not archive the public
 fork, switch active remotes or cut over services before w3's mirror/source CHECK.
 The production recipe and build helpers in this PR are based on PR3's accepted
@@ -91,8 +91,10 @@ reservation. Require at least 4.5 GiB for the build container plus 512 MiB host
 headroom, one compiler at a time; log measured RAM, image result and release all
 locks on exit. Do not rerun this task's accepted old build.
 
-The Docker context must contain only `source/` from `git archive` of the exact
-combined mirrored revision. `deploy/lyfe-social/Dockerfile.review` pins the immutable
+Prepare the Docker context with `prepare-release-context.sh`: `source/` and the
+matching `source-archive.tar.gz` come from `git archive` of the exact combined
+revision; the helper also copies the reviewed Dockerfile and writes build arguments.
+`deploy/lyfe-social/Dockerfile.review` pins the immutable
 toolchain/lock, generates Prisma offline, applies the version-checked font guard,
 copies the included source-map-free one-worker config and invokes webpack with
 a 3 GiB heap. Backend and orchestrator compile sequentially afterward. The
@@ -102,11 +104,14 @@ use `--memory=4608m --cpuset-cpus=0,1`; a BuildKit worker must have an equivalen
 coordinated limit. Do not assume CLI flags cap a separately running BuildKit
 worker. No builder/resource change is authorized here.
 
-Pass `RELEASE_REV` and `NEXT_PUBLIC_SOURCE_CODE_URL` as explicit build arguments.
-The latter must be w1's verified signed-in tarball URL on the app, bound to that
-same exact source revision. There is deliberately no GitHub/source fallback in
-the recipe: it rejects an empty argument. The endpoint is not implemented by this
-compatibility PR and remains an explicit integration/release gate. Record the resulting new immutable full-app image;
+Pass `RELEASE_REV`, `RELEASE_SOURCE_SHA256` and `NEXT_PUBLIC_SOURCE_CODE_URL`
+from the helper's `build.args` as explicit build arguments. The URL must be
+`https://social.biz-box.io/api/source/<revision>.tar.gz`, bound to the same source
+revision. The recipe verifies the archive checksum and rejects any other URL.
+The integrated `SourceController` implements this endpoint; its signed-in
+Nest HTTP/download checks pass, while actual production nginx/full-service
+startup and authenticated source readback remain release gates.
+Record the resulting new immutable full-app image;
 inspect compiled server/client output for fixture URLs. Never reuse the localhost
 review `.next`, or treat the upstream toolchain digest as the new release image.
 The recipe starts only the three package-level PM2 scripts plus nginx; it does
