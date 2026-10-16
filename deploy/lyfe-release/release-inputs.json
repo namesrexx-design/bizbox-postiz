@@ -1,0 +1,23 @@
+{
+  "application_revision": "1bac9b61be8a30dea31b7cdac4a76bf1f51f5229",
+  "source_archive_sha256": "3b5a9c8566327db43d400976026794b095166637170904c4c97c6e25b8994286",
+  "preparation_revision": "23cc99fad5d26568a8402e22197c9aeebef58320",
+  "operator_revision": "833fd239532891b2c41dac022850c891b90d47b3",
+  "operator_path": "docs/social-lyfe/operator-handoff-2519.md",
+  "approval": "appr_mvabgkmsa61a518f",
+  "files_sha256": {
+    "guarded-build.py": "85007a3ec4e7991893abc6fdb2eede02720f51e2e3b21a28eef0d024ccadeafb",
+    "rehearsal-clone.py": "f41d6d13b311c171b5543828bad2fa18d6aa62fba4eca4f635f35ecd9053794e",
+    "compose.rehearsal.yml": "7baffeb998593daff07a4078ccead79eb8a7cfb87113ac0862ec866baaee74d3",
+    "test-preparation.py": "976164e077e6838445edb2ed0b2320e2f74fb4edbdf02f0d5804f9e519af318b",
+    "README.md": "10776a56fdde46bcb5a815acb3343276e92d04bee98e90b867f4bf31f793632e",
+    "create-app-only.py": "9cc4a78f737868617a02b863f69bfb05cca9a65eb01b521ebd64405efa722363",
+    "build.args": "faa999c46cd2fe3029bbcf992abdebe060afcf161a92ee217984bfd2f29f8d4c"
+  },
+  "source_offer_url": "https://social.biz-box.io/api/source/1bac9b61be8a30dea31b7cdac4a76bf1f51f5229.tar.gz",
+  "source_context": "/mnt/work/2452-release/w2/bear-bull-ico-context-9198",
+  "accepted_integration_revision": "92b0cc04736e5bcc692dd0b25499856c1059c52b",
+  "build_output": "/mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output",
+  "slot_grant": "2452-pr6-1bac9b61-three-slots",
+  "status": "PROPOSED: W1 sole post-exit integration after W3 CHECK"
+}
