@@ -103,3 +103,35 @@ Exact public build configuration and compiler scripts are in
 `deploy/lyfe-social/REVIEW-BUILD.md`. All settings and source must accompany the
 final candidate; the review profile disables source maps and limits compiler
 workers to one. No deployment or OAuth test has occurred.
+
+## Temporary LinkedIn patch snapshot and recovery
+
+Read-only inspection on 2026-10-16 confirms both files in the running `postiz`
+container:
+
+```
+/app/apps/backend/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.provider.js
+/app/apps/backend/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.provider.js.bak-20261016
+```
+
+The first file is the current provider; the `.bak-20261016` is the pre-patch
+backup. The release lead must preserve both before recreation, together with the
+current image/compose/overlay snapshot and the matching temporary patch source.
+These commands are release instructions only and were not executed by this task:
+
+```sh
+# Use a new release-owned rollback directory; do not copy env or credentials.
+docker cp postiz:/app/apps/backend/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.provider.js "$ROLLBACK_DIR/linkedin.provider.current.js"
+docker cp postiz:/app/apps/backend/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.provider.js.bak-20261016 "$ROLLBACK_DIR/linkedin.provider.js.bak-20261016"
+```
+
+Recovery order: restore the previous complete image and matching overlays into a
+stopped app container using the saved compose inputs, copy
+`linkedin.provider.current.js` back to the exact current-provider path, preserve
+the `.bak-20261016` beside it, then start only that app service. Do not copy the
+pre-patch backup over the current provider. Preserve data/env/networks/mounts.
+Verify the restored personal provider requests only `openid profile w_member_social`
+and uses `/v2/userinfo` for member mapping. Verify the durable replacement does the
+same before switching over. No OAuth, account reconnect, migration or publishing
+is needed for those static/fixture checks. A plain stock-image rollback alone
+would lose the temporary running-container patch.
