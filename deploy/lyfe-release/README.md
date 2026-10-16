@@ -8,15 +8,20 @@ Existing owner approval `appr_mvabgkmsa61a518f` is approved; do not duplicate it
 
 ## Current gates and owners
 
-- Onboarding, coordinated by Social w2: recover Docker-layer disk capacity using
-  separately cleared archive moves. Production `/var/lib/docker` is on root,
-  currently 98% used with approximately 8.5 GiB available. StorageBox capacity
-  alone cannot clear this gate. No cleanup or Docker migration is authorized here.
+- Social w2 coordinates fresh local capacity and runtime windows. Production
+  Docker/containerd remain on root. The old 98% / 8.5 GiB observation is historical;
+  after the purchased local work volume, the 05:19Z check was about 52 GiB free
+  and 83% used. Remeasure before execution. No cleanup or Docker migration is
+  authorized here.
 - Social lead: grant the single build all three real shared slots after recovery.
   The script uses `/usr/bin/flock`'s kernel locks directly through `fcntl`, never
   the three-slot `flock` shim, and refuses to queue behind an occupied slot.
-- W1: build the exact full image, verify emitted URLs/source/compiled apps, then
-  run the isolated rehearsal below. No image of d78 currently exists.
+- W1: the exact d78 image compiled, exported and passed network-none image and
+  compiled-provider checks. Its immutable ID is recorded in `release-image.id`.
+  Application startup/email/phone/rollback remain open. Resume only after W2's
+  next explicit runtime grant following the reserved Web-app window. D78 retains
+  the cloud artwork and cannot clear corrected PR6 branding parity; PR7 repins
+  the corrected candidate for a separate later build grant.
 - Claude/web-app: merge and publish [BizBox #480](https://github.com/namesrexx-design/bizbox/pull/480),
   then verify saved Main → Social on its first request, manual Main stays Main,
   unknown room falls back Main, and missing owner pass stays 401. It is currently

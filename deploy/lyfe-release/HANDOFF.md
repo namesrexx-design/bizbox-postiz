@@ -46,7 +46,13 @@ not clear root capacity. No compiler reservation is implied by these commands.
 | Production API | `https://social.biz-box.io/api` |
 | Production source URL | `https://social.biz-box.io/api/source/d78e598b6117607d24cd0465f98639241c107571.tar.gz` |
 | Dependency lock SHA256 | `a80b52413e65fc53791524120ef4fa300a2815020885961801ebed02cf9f1fee` |
-| Release image | **UNBUILT**; require immutable ID from `release-image.id` after successful build |
+| D78 rehearsal image | `sha256:7686a2108317973bb21ed6194dc298432ea426229b8ec0e6c26a67610f6c41a1`; exported and network-none checked; corrected-source parity remains open |
+
+The d78 build/export and network-none image/provider checks have passed. Runtime
+was safely stopped before app startup for the reserved Web-app window; resume
+only after W2 returns the next explicit runtime grant. The corrected bear/bull
+source in PR6 and its reviewed PR7 repin require a separate later build grant.
+This d78 image cannot clear corrected-source branding parity.
 
 These external operator files accompany d78; they do not enter or modify its
 source archive. Never use the historical helper embedded in d78, the older
@@ -80,4 +86,5 @@ container, complete private snapshot, active LinkedIn provider and dated backup,
 effective env, networks, config/uploads volumes, stored channels and queues.
 Never run root pm2/schema push or migrations. Private Live snapshots stay
 root-only on Live. Outputs remain under `/mnt/storagebox/work/2452-release`;
-the full image, actual startup/email/rollback and Live cutover have not run.
+the d78 image is built and exported. Actual app startup/email/phone/rollback and
+Live cutover have not run.
