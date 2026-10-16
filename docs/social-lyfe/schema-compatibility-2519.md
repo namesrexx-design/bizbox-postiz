@@ -49,6 +49,22 @@ database connection occurs. Dependencies outside these flows are substituted.
 The generated menu HTML is an isolated component fixture; it is not a rebuilt
 calendar/editor application or a production interaction test.
 
+Builder result: 12/12 focused checks passed. Chromium and WebKit 390×844
+captures of that actual component confirm both rename actions absent and retained
+menu content without horizontal overflow. Styles come from the accepted prior
+review output; the synthetic harness adds a diagnostic label/background only.
+See [Chromium capture](compatibility-phone/menu-chromium-390.png) and
+[WebKit capture](compatibility-phone/menu-webkit-390.png). These static component
+captures do not establish interactions or a changed full-application phone PASS.
+To reproduce with the server's installed Playwright and the accepted CSS output:
+
+```sh
+NODE_PATH=/srv/lyfe/nilla-qa-tools/node_modules \
+COMPAT_MENU_HTML=/srv/lyfe/compatibility-check-output/menu.html \
+COMPAT_REVIEW_CSS_DIR=/srv/lyfe/pods/social-media-w2/combined-frontend-review-build/static/css \
+  node tests/compatibility/capture-menu.cjs
+```
+
 Accepted PR3 combined build/phone PASS belongs to its earlier exact source and
 remains historical evidence. This changed candidate needs its own independent
 CHECK. No full frontend/backend/orchestrator compile was run for this change.
