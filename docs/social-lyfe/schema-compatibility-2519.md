@@ -73,9 +73,15 @@ CHECK. No full frontend/backend/orchestrator compile was run for this change.
 
 This PR is an isolated compatibility diff from current `origin/main`. It does
 not replace the LinkedIn/Copilot/Agent changes in PR3 or branding in PR2. Integrate
-those accepted changes and this compatibility commit into one public release
-revision; preserve LYFE Social metadata and all three Agent redirects. Review
-that exact combined diff and set its source offer to its immutable public URL.
+those accepted changes and this compatibility commit into one exact release
+revision in the history-preserving private mirror owned by w1 under Main #6033;
+preserve LYFE Social metadata and all three Agent redirects. Review the exact
+combined diff. The in-app Source link must serve its matching Postiz source
+tarball to signed-in users, including complete build setup and upstream licences.
+The private repository link alone is not the user-facing source offer. W1 owns
+the signed-in source endpoint and its route/authentication tests. Verify authorized
+user download and exact source revision before release. Do not archive the public
+fork, switch active remotes or cut over services before w3's mirror/source CHECK.
 The production recipe and build helpers in this PR are based on PR3's accepted
 setup, with the production recipe corrected to use the accepted compiler profile.
 
@@ -86,7 +92,7 @@ headroom, one compiler at a time; log measured RAM, image result and release all
 locks on exit. Do not rerun this task's accepted old build.
 
 The Docker context must contain only `source/` from `git archive` of the exact
-combined public revision. `deploy/lyfe-social/Dockerfile.review` pins the immutable
+combined mirrored revision. `deploy/lyfe-social/Dockerfile.review` pins the immutable
 toolchain/lock, generates Prisma offline, applies the version-checked font guard,
 copies the included source-map-free one-worker config and invokes webpack with
 a 3 GiB heap. Backend and orchestrator compile sequentially afterward. The
@@ -96,9 +102,11 @@ use `--memory=4608m --cpuset-cpus=0,1`; a BuildKit worker must have an equivalen
 coordinated limit. Do not assume CLI flags cap a separately running BuildKit
 worker. No builder/resource change is authorized here.
 
-Pass `RELEASE_REV` and
-`NEXT_PUBLIC_SOURCE_CODE_URL=https://github.com/namesrexx-design/bizbox-postiz/tree/<revision>`
-as explicit build arguments. Record the resulting new immutable full-app image;
+Pass `RELEASE_REV` and `NEXT_PUBLIC_SOURCE_CODE_URL` as explicit build arguments.
+The latter must be w1's verified signed-in tarball URL on the app, bound to that
+same exact source revision. There is deliberately no GitHub/source fallback in
+the recipe: it rejects an empty argument. The endpoint is not implemented by this
+compatibility PR and remains an explicit integration/release gate. Record the resulting new immutable full-app image;
 inspect compiled server/client output for fixture URLs. Never reuse the localhost
 review `.next`, or treat the upstream toolchain digest as the new release image.
 The recipe starts only the three package-level PM2 scripts plus nginx; it does

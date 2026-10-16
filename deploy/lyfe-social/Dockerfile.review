@@ -1,6 +1,7 @@
 # Release recipe only. Build the reviewed full source; never reuse an old frontend payload.
 FROM ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
 ARG RELEASE_REV
+# W1 supplies the verified signed-in source-tarball URL for this exact revision.
 ARG NEXT_PUBLIC_SOURCE_CODE_URL
 ENV NEXT_PUBLIC_SOURCE_CODE_URL=$NEXT_PUBLIC_SOURCE_CODE_URL
 ENV NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production IS_GENERAL=true STORAGE_PROVIDER=local
@@ -20,7 +21,7 @@ RUN test -n "$RELEASE_REV" && test -n "$NEXT_PUBLIC_SOURCE_CODE_URL" \
     && NODE_OPTIONS=--max-old-space-size=3072 pnpm --filter postiz-backend run build \
     && NODE_OPTIONS=--max-old-space-size=3072 pnpm --filter postiz-orchestrator run build
 COPY source/ /usr/src/lyfe-social/
-LABEL org.opencontainers.image.source="https://github.com/namesrexx-design/bizbox-postiz" \
+LABEL org.opencontainers.image.source="https://github.com/namesrexx-design/bizbox-postiz-private" \
       org.opencontainers.image.revision=$RELEASE_REV \
       org.opencontainers.image.licenses="AGPL-3.0"
 # Explicit package filters exclude the root pm2-run script, which pushes the schema.

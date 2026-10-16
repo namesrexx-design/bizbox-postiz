@@ -27,5 +27,5 @@ changes the installed Next loader only inside the disposable image layer, retain
 its MIT notices and the existing font bytes. Its complete source is in build-tools.
 
 See `docs/social-lyfe/schema-compatibility-2519.md` for integration dependencies,
-future image resource limits and release gates. This toolchain image is never the
+future image resource limits, private-mirror/signed-in source offer and release gates. This toolchain image is never the
 selected release image. The full image and isolated startup remain unbuilt.
