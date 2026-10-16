@@ -23,6 +23,7 @@ const nextConfig = {
     ];
   },
   reactStrictMode: false,
+  serverExternalPackages: ['isomorphic-dompurify', 'jsdom'],
   transpilePackages: ['crypto-hash'],
   // Enable production sourcemaps for Sentry
   productionBrowserSourceMaps: false,
