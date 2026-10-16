@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  NotImplementedException,
 } from '@nestjs/common';
 import { ioRedis } from '@gitroom/nestjs-libraries/redis/redis.service';
 import { IntegrationManager } from '@gitroom/nestjs-libraries/integrations/integration.manager';
@@ -105,7 +106,10 @@ export class IntegrationsController {
     @Param('id') id: string,
     @Body() body: IntegrationNameDto
   ) {
-    return this._integrationService.updateCustomName(org.id, id, body.name);
+    // The compatible schema has no custom-name column. Reject before any write.
+    throw new NotImplementedException(
+      'Channel renaming is unavailable in this release.'
+    );
   }
 
   @Get('/list')
@@ -119,7 +123,7 @@ export class IntegrationsController {
             p.providerIdentifier
           );
           return {
-            name: p.customName || p.name,
+            name: p.name,
             originalName: p.name,
             id: p.id,
             internalId: p.internalId,

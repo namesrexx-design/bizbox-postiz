@@ -18,8 +18,7 @@ import {
 } from '@prisma/client';
 import { GetPostsDto } from '@gitroom/nestjs-libraries/dtos/posts/get.posts.dto';
 import { GetPostsListDto } from '@gitroom/nestjs-libraries/dtos/posts/get.posts.list.dto';
-import { groupBy, shuffle, uniqBy } from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
+import { shuffle } from 'lodash';
 import { CreateGeneratedPostsDto } from '@gitroom/nestjs-libraries/dtos/generator/create.generated.posts.dto';
 import { IntegrationService } from '@gitroom/nestjs-libraries/database/prisma/integrations/integration.service';
 import { makeId } from '@gitroom/nestjs-libraries/services/make.is';
@@ -653,33 +652,11 @@ export class PostsService {
       throw new NotFoundException('Post not found');
     }
 
-    const batch = posts[0].batchId
-      ? await this._postRepository.getPostsByBatch(
-          orgId,
-          posts[0].batchId,
-          group
-        )
-      : [];
-
-    // the other channels the post was created with, the editor holds one
-    // post per channel, and a channel that repeats differently is its own post
-    const siblings = uniqBy(
-      Object.values(groupBy(batch, (post) => post.group))
-        .map((batchPosts) => this.arrangePostsByGroup(batchPosts, undefined))
-        .filter(
-          (batchPosts) =>
-            batchPosts.length &&
-            batchPosts[0].integrationId !== posts[0].integrationId &&
-            batchPosts[0].intervalInDays === posts[0].intervalInDays
-        ),
-      (batchPosts) => batchPosts[0].integrationId
-    );
-
+    // This schema cannot persist cross-channel batches. Open only the requested
+    // organization/group; never infer sibling channels from content or dates.
     return {
       ...(await this.groupForEditor(posts)),
-      siblings: await Promise.all(
-        siblings.map((batchPosts) => this.groupForEditor(batchPosts))
-      ),
+      siblings: [],
     };
   }
 
@@ -1103,7 +1080,6 @@ export class PostsService {
     keepGroup = false
   ): Promise<any[]> {
     const postList = [];
-    const batchId = uuidv4();
     for (const post of body.posts) {
       if (
         (body.type === 'schedule' || body.type === 'now') &&
@@ -1145,8 +1121,7 @@ export class PostsService {
         body.tags,
         creationMethod,
         body.inter,
-        keepGroup,
-        batchId
+        keepGroup
       );
 
       if (!posts?.length) {

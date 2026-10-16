@@ -1,0 +1,90 @@
+Prisma schema loaded from compatibility.prisma
+
+✔ Generated Prisma Client (v6.5.0) to ./node_modules/@prisma/client in 1.04s
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+
+TAP version 13
+# Subtest: generated client omits only the two absent fields and retains scorer batch metadata
+ok 1 - generated client omits only the two absent fields and retains scorer batch metadata
+  ---
+  duration_ms: 2.145747
+  type: 'test'
+  ...
+# Subtest: rename HTTP route rejects before touching any service or repository
+ok 2 - rename HTTP route rejects before touching any service or repository
+  ---
+  duration_ms: 113.150806
+  type: 'test'
+  ...
+# Subtest: integration lists retain provider name and omit private tokens
+ok 3 - integration lists retain provider name and omit private tokens
+  ---
+  duration_ms: 2.267798
+  type: 'test'
+  ...
+# Subtest: editor loads only the requested org/group and never infers siblings
+ok 4 - editor loads only the requested org/group and never infers siblings
+  ---
+  duration_ms: 1.408111
+  type: 'test'
+  ...
+# Subtest: post create/update keeps thread, channel, date and settings without batch payloads
+ok 5 - post create/update keeps thread, channel, date and settings without batch payloads
+  ---
+  duration_ms: 1.787475
+  type: 'test'
+  ...
+# Subtest: keepGroup sweeps dropped comments while rotated edit stays in its own group
+ok 6 - keepGroup sweeps dropped comments while rotated edit stays in its own group
+  ---
+  duration_ms: 0.989238
+  type: 'test'
+  ...
+# Subtest: multi-channel save retains each date/settings and workflow/anchor calls
+ok 7 - multi-channel save retains each date/settings and workflow/anchor calls
+  ---
+  duration_ms: 0.846067
+  type: 'test'
+  ...
+# Subtest: published post guard still rejects schedule before saving without republish opt-in
+ok 8 - published post guard still rejects schedule before saving without republish opt-in
+  ---
+  duration_ms: 1.094208
+  type: 'test'
+  ...
+# Subtest: public preview and release-id response preserve existing safe field filtering
+ok 9 - public preview and release-id response preserve existing safe field filtering
+  ---
+  duration_ms: 0.684435
+  type: 'test'
+  ...
+# Subtest: actual channel menu omits both rename controls and retains working actions
+ok 10 - actual channel menu omits both rename controls and retains working actions
+  ---
+  duration_ms: 162.199527
+  type: 'test'
+  ...
+# Subtest: stale comment anchors detach only on edited posts whose visible quote changed
+ok 11 - stale comment anchors detach only on edited posts whose visible quote changed
+  ---
+  duration_ms: 8.879222
+  type: 'test'
+  ...
+# Subtest: integration repository and public API retain organization and customer filters
+ok 12 - integration repository and public API retain organization and customer filters
+  ---
+  duration_ms: 0.302163
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3773.93353
