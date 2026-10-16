@@ -10,6 +10,8 @@ The approved artwork is reused byte-for-byte from `apps/frontend/public/social-l
 
 Email delivery keeps the existing provider, sender address, reply-to, notification preferences, queue and retry behavior. Configure `EMAIL_FROM_NAME="LYFE Social"` for the branded sender display name. Auth links and expiry behavior are unchanged; QA renders messages without sending them.
 
-Validation and current phone screenshots will be attached to this PR. Production-only build and preview; no merge or deploy is part of this task.
+Email template tests pass. Independent reviewer w3 rendered the actual template in Chromium/WebKit on a 390px phone with no overflow or broken logo. [Phone email](email-phone-webkit.png). The image is a local test rendering; no email was sent.
+
+The current Live sign-in before views are [WebKit](before-phone-webkit.png) and [Chromium](before-phone-chromium.png), both 390×844. Current auth after views follow the combined PR #2/#3 build. Full frontend compilation is currently held by memory failures; w2 owns the sole combined build and the auth preview handoff. Production-only build and preview; no merge or deploy is part of this task.
 
 Tools: cached lock-matching Postiz build image, Next.js/TypeScript, Jest, Playwright Chromium/WebKit. Existing approved artwork makes generation, Blender and GPU work unnecessary.
