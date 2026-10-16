@@ -32,9 +32,10 @@ publishing posts, secret changes, migrations, or publishing the BizBox site.
    the exact patched provider artifact and its matching source separately, without
    copying secrets. A stock image alone does not capture that patch. Preserve the existing secrets,
    uploads/config mounts, network, databases, Redis and Temporal state.
-5. The lead releases only the application service using its established compose
-   procedure after review and readiness checks. Keep the saved old image and all
-   overlays. No datastore restart or migration is needed for these changes.
+5. The lead releases only the application service using the concrete operator
+   handoff after compatibility, image/startup, destination and approval gates
+   pass. Keep the original container, complete private snapshot and all overlays.
+   No datastore restart or schema write is authorized by this task.
 
 ## Candidate checks
 
