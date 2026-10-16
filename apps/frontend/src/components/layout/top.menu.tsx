@@ -1,5 +1,4 @@
 'use client';
-
 import { FC, ReactNode, useCallback } from 'react';
 import { useUser } from '@gitroom/frontend/components/layout/user.context';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
@@ -7,6 +6,7 @@ import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import { MenuItem } from '@gitroom/frontend/components/new-layout/menu-item';
 import { useModals } from '@gitroom/frontend/components/layout/new-modal';
 import { AgentMediaModal } from '@gitroom/frontend/components/layout/agent.media.modal';
+import { OWNER_SOCIAL_ROOM_URL } from '@gitroom/frontend/components/agents/owner.social.room';
 
 interface MenuItemInterface {
   name: string;
@@ -55,7 +55,7 @@ export const useMenuItem = () => {
       path: '/launches',
     },
     {
-      name: 'Agent',
+      name: 'Agent Room',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ export const useMenuItem = () => {
           />
         </svg>
       ),
-      path: '/agents',
+      path: OWNER_SOCIAL_ROOM_URL,
     },
     {
       name: t('analytics', 'Analytics'),
