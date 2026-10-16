@@ -6,6 +6,8 @@ import 'react-tooltip/dist/react-tooltip.css';
 import '@copilotkit/react-ui/styles.css';
 import LayoutContext from '@gitroom/frontend/components/layout/layout.context';
 import { ReactNode } from 'react';
+import type { Metadata } from 'next';
+import { SocialBrandSource } from '@gitroom/frontend/components/ui/social-brand-source';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import PlausibleProvider from 'next-plausible';
 import clsx from 'clsx';
@@ -25,6 +27,12 @@ import { HtmlComponent } from '@gitroom/frontend/components/layout/html.componen
 import Script from 'next/script';
 import { ChangeDirClient } from '@gitroom/frontend/components/new-layout/change.dir.client';
 
+export const metadata: Metadata = {
+  title: 'LYFE Social',
+  description: 'Your social calendar, in one place.',
+  applicationName: 'LYFE Social',
+};
+
 const jakartaSans = Plus_Jakarta_Sans({
   weight: ['600', '500'],
   style: ['normal', 'italic'],
@@ -40,7 +48,8 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   return (
     <html>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         {!!process.env.DATAFAST_WEBSITE_ID && (
           <Script
             data-website-id={process.env.DATAFAST_WEBSITE_ID}
@@ -123,6 +132,9 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
             </Plausible>
           </SentryComponent>
         </VariableContextComponent>
+        <footer className="px-4 py-2 text-xs text-textColor" aria-label="Software source">
+          LYFE Social · Based on Postiz (AGPL-3.0) · <SocialBrandSource />
+        </footer>
       </body>
     </html>
   );

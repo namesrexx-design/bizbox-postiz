@@ -1,0 +1,43 @@
+model mastra_scorers {
+  id                   String    @id
+  scorerId             String
+  traceId              String?
+  runId                String
+  scorer               Json
+  preprocessStepResult Json?
+  extractStepResult    Json?
+  analyzeStepResult    Json?
+  score                Float
+  reason               String?
+  metadata             Json?
+  preprocessPrompt     String?
+  extractPrompt        String?
+  generateScorePrompt  String?
+  generateReasonPrompt String?
+  analyzePrompt        String?
+  reasonPrompt         String?
+  input                Json
+  output               Json
+  additionalContext    Json?
+  runtimeContext       Json?
+  entityType           String?
+  entity               Json?
+  entityId             String?
+  source               String
+  resourceId           String?
+  threadId             String?
+  createdAt            DateTime  @db.Timestamp(6)
+  updatedAt            DateTime  @db.Timestamp(6)
+  createdAtZ           DateTime? @default(now()) @db.Timestamptz(6)
+  updatedAtZ           DateTime? @default(now()) @db.Timestamptz(6)
+  spanId               String?
+  requestContext       Json?
+  organizationId       String?
+  projectId            String?
+  batchId              String?
+  datasetId            String?
+  datasetItemId        String?
+
+  @@index([traceId, spanId, createdAt(sort: Desc)], map: "public_mastra_scores_trace_id_span_id_created_at_idx")
+  @@index([traceId, spanId, createdAt(sort: Desc)], map: "mastra_scores_trace_id_span_id_created_at_idx")
+}

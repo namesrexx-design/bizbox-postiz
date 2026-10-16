@@ -167,10 +167,6 @@ export class IntegrationService {
     );
   }
 
-  updateCustomName(org: string, id: string, name: string) {
-    return this._integrationRepository.updateCustomName(org, id, name);
-  }
-
   updateNameAndUrl(id: string, name: string, url: string) {
     return this._integrationRepository.updateNameAndUrl(id, name, url);
   }

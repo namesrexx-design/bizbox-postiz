@@ -1,0 +1,8 @@
+# Review recipe only; combine with the existing Live base compose.
+services:
+  postiz:
+    image: bizbox-postiz:lyfe-social-2452
+    pull_policy: never
+    entrypoint: ["sh", "-c"]
+    command:
+      - "nginx && pnpm --filter postiz-frontend --filter postiz-backend --filter postiz-orchestrator --parallel run pm2 && pm2 logs"

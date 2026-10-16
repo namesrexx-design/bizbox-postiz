@@ -1,0 +1,6 @@
+# Optional local alias for the exact public toolchain used by the review scripts.
+# It performs no dependency installation, application build or database access.
+FROM ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
+LABEL org.opencontainers.image.base.name="ghcr.io/gitroomhq/postiz-app:v2.25.0" \
+      org.opencontainers.image.base.digest="sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb" \
+      org.opencontainers.image.licenses="AGPL-3.0"
