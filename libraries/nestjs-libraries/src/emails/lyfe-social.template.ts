@@ -1,11 +1,12 @@
+const htmlEntities: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+};
 const escapeHtml = (value: string) =>
-  value.replace(/[&<>"']/g, (character) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  })[character]!);
+  value.replace(/[&<>"']/g, (character) => htmlEntities[character]);
 
 // Transactional content is already HTML; only surrounding text and URLs are escaped.
 export const renderLyfeSocialEmail = (
