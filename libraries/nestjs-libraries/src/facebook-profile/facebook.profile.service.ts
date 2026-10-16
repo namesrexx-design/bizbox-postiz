@@ -56,7 +56,7 @@ export class FacebookProfileService {
     if (metadata.native) throw new HttpException('Native results require the result endpoint', 409);
     return this.prisma.$transaction(async tx => {
       // Serialize staging per org; retries reconcile this same immutable item instead of duplicating it.
-      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtextextended(${orgId + ':facebook-profile'}, 0))`;
+      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtextextended(${orgId + ':facebook-profile'}, 0))::text`;
       const existing = await tx.post.findMany({ where: { organizationId: orgId, integrationId: lane.id, deletedAt: null }, select: postSelect });
       const matches = existing.filter(p => { const m = parseSettings(p.settings)?.bizboxFacebookProfile; return m?.approvalId === metadata.approvalId && m?.itemId === metadata.itemId; });
       if (matches.length > 1) throw new HttpException('Duplicate profile item; reconcile before retry', 409);
