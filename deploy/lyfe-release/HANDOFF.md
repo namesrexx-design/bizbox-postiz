@@ -30,7 +30,7 @@ baseline and restored rollback. Do not replace that current baseline with the
 older two-provider-only snapshot in the historical procedural example below.
 W1 must supply actual startup/source/email/phone/queue and complete baseline/
 restored rollback results to W3. #480 publication and authenticated destination
-readback remain gates before Live recreation. The owner-PC publisher approval
+readback passed W3 CHECK; see the completed destination gate below. The owner-PC publisher approval
 is separate and does not authorize scheduling or change this release scope.
 
 # Canonical release handoff — 2452 / 2519
@@ -101,10 +101,18 @@ independent startup command.
    backend and orchestrator, authenticated source bytes, actual queued email to
    Mailpit, unchanged app schema and complete-image patch-preserving app rollback.
    W3 must check the actual result; these runtime gates remain **OPEN**.
-3. Claude/web-app must publish [BizBox #480](https://github.com/namesrexx-design/bizbox/pull/480)
-   and read back authenticated first-request Social selection, manual Main,
-   unknown-room fallback and missing-pass 401. Its companion-review author hold is
-   cleared; publication/readback remains a separate **OPEN** gate.
+3. Destination gate **PASS / PUBLISHED**: [BizBox #480](https://github.com/namesrexx-design/bizbox/pull/480)
+   merged at 2026-10-16 06:45:03 UTC. The selected platform revision
+   `0893533de58ca704f884fe3d911a84d3d2d68286` is bound to published checkpoint
+   `6ad1c56c4de26e549df4a3c8`, deployed at 06:37:43.752 UTC.
+   [W3 final independent CHECK PASS](https://github.com/namesrexx-design/bizbox/pull/480#issuecomment-6209738514)
+   confirms the actual signed-in phone result at
+   https://biz-box.io/owner/room?room=social-media: first-request Social,
+   manual Main retention, mounted query changes, unknown/malformed fallback,
+   missing-pass 401 and no page errors. No republish is needed. Sanitized binding,
+   final QA and capture are archived on Live Studio at
+   `/mnt/storagebox/social-media/11069-published-social-destination-check/`.
+   Existing approval is retained; W1 owns the separate corrected-image grant.
 4. After both runtime and destination PASS, re-read approval and use the
    [corrected complete production operator handoff](https://github.com/namesrexx-design/bizbox-postiz/blob/833fd239532891b2c41dac022850c891b90d47b3/docs/social-lyfe/operator-handoff-2519.md#future-approved-release-preserve-the-current-container-first)
    for private preservation, app-only forward creation, acceptance and rollback.

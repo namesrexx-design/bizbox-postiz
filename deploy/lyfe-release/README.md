@@ -23,10 +23,12 @@ Existing owner approval `appr_mvabgkmsa61a518f` is approved; do not duplicate it
   the three-slot `flock` shim, and refuses to queue behind an occupied slot.
 - W1: build the exact full image, verify emitted URLs/source/compiled apps, then
   run the isolated rehearsal below. This proposal does not certify a PR6 image.
-- Claude/web-app: merge and publish [BizBox #480](https://github.com/namesrexx-design/bizbox/pull/480),
-  then verify saved Main → Social on its first request, manual Main stays Main,
-  unknown room falls back Main, and missing owner pass stays 401. It is currently
-  open. A 200 response from the SPA shell does not establish publication.
+- Destination: [BizBox #480](https://github.com/namesrexx-design/bizbox/pull/480) is merged
+  and published. [W3 final CHECK PASS](https://github.com/namesrexx-design/bizbox/pull/480#issuecomment-6209738514)
+  verifies checkpoint `6ad1c56c4de26e549df4a3c8` at platform revision
+  `0893533de58ca704f884fe3d911a84d3d2d68286` and real signed-in phone navigation.
+  Saved Main → Social, manual Main, mounted query changes, unknown/malformed
+  fallback, missing-pass 401 and no page errors pass. See HANDOFF.md for archive.
 - W3: independently check this preparation; later check the actual image/startup
   and final Live title/auth/source/channels/LinkedIn once an artifact exists.
 
