@@ -16,6 +16,8 @@ tests retain accepted bytes. The rehearsal helper changes only REV. Follow-up
 `config/dynamicconfig/docker.yaml` and refreshes its manifest checksum. The pinned
 Temporal image contains that file; `development-sql.yaml` is absent. The active
 d78 preparation and W1's running inputs are not modified by this correction.
+Follow-up 10020 also removes unsupported `--no-deps` from the README's
+`docker compose create baseline` command and refreshes the README checksum.
 The immutable PR6 source archive itself is unchanged; these operator files stay
 external to its authenticated source offer.
 

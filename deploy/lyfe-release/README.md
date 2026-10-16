@@ -128,7 +128,7 @@ channel row, schedule, queue or whole Live container snapshot is copied here.
 export REHEARSAL_SCHEMA_SQL="$PRIVATE/schema.sql"
 docker compose -f compose.rehearsal.yml config --quiet
 docker compose -f compose.rehearsal.yml up -d postgres redis temporal-postgresql temporal smtp
-docker compose -f compose.rehearsal.yml create --no-deps baseline
+docker compose -f compose.rehearsal.yml create baseline
 docker cp "$PRIVATE/linkedin.current.js" "lyfe2452-baseline:$PROVIDER"
 docker cp "$PRIVATE/linkedin.bak-20261016" "lyfe2452-baseline:$PROVIDER.bak-20261016"
 docker compose -f compose.rehearsal.yml start baseline
