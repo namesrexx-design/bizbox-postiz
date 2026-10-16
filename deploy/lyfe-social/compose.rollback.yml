@@ -1,0 +1,8 @@
+# Use with the original Live base compose ALONE, never with compose.review.yml.
+services:
+  postiz:
+    image: ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
+    pull_policy: never
+    entrypoint: ["sh", "-c"]
+    command:
+      - "nginx && pnpm --filter postiz-frontend --filter postiz-backend --filter postiz-orchestrator --parallel run pm2 && pm2 logs"
