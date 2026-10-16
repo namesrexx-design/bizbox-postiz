@@ -27,7 +27,10 @@ publishing posts, secret changes, migrations, or publishing the BizBox site.
    run `prisma-db-push`, reset a database, or use an entrypoint that invokes it.
 4. Before changing Live Studio, the lead records the current immutable image,
    compose inputs and frontend/backend artifact paths. Preserve that complete
-   known-good release as the rollback target. Preserve the existing secrets,
+   known-good release as the rollback target. A temporary LinkedIn patch may be
+   present in the live container but absent from its image: record and preserve
+   the exact patched provider artifact and its matching source separately, without
+   copying secrets. A stock image alone does not capture that patch. Preserve the existing secrets,
    uploads/config mounts, network, databases, Redis and Temporal state.
 5. The lead releases only the application service using its established compose
    procedure after review and readiness checks. Keep the saved old image and all
@@ -62,7 +65,10 @@ publishing posts, secret changes, migrations, or publishing the BizBox site.
 If startup, login, composing, room navigation or the disabled endpoint check
 fails, the lead restores the complete previous application image and its matching
 frontend/backend overlays together, then recreates only that application service
-with the same preserved env, networks and mounts. Do not restore databases or
+with the same preserved env, networks and mounts. If the previous service used
+an authorized temporary LinkedIn patch, the lead restores that recorded provider
+artifact too; verify its reduced personal scopes/userinfo behavior without OAuth.
+Do not silently revert the owner to the old broad-scope provider. Do not restore databases or
 remove uploads. Verify the previous login/calendar health. Rolling back restores
 the previous assistant behavior too; do not mistake a frontend-only rollback for
 restoring backend behavior. Leave the new release artifact and logs intact.
