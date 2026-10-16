@@ -13,7 +13,8 @@ RUN rm -rf /app/apps /app/libraries /app/dist
 COPY source/ /app/
 RUN test -n "$RELEASE_REV" && test -n "$NEXT_PUBLIC_SOURCE_CODE_URL" \
     && echo 'a80b52413e65fc53791524120ef4fa300a2815020885961801ebed02cf9f1fee  pnpm-lock.yaml' | sha256sum -c - \
-    && CIRCLE_NODE_TOTAL=2 RAYON_NUM_THREADS=2 NODE_OPTIONS=--max-old-space-size=3072 pnpm run build
+    && DATABASE_URL=postgresql://preview:preview@127.0.0.1:1/preview node_modules/.bin/prisma generate --schema libraries/nestjs-libraries/src/database/prisma/schema.prisma \
+    && CIRCLE_NODE_TOTAL=2 RAYON_NUM_THREADS=2 NODE_OPTIONS=--max-old-space-size=4096 pnpm run build
 COPY source/ /usr/src/lyfe-social/
 LABEL org.opencontainers.image.source="https://github.com/namesrexx-design/bizbox-postiz" \
       org.opencontainers.image.revision=$RELEASE_REV \
