@@ -1,0 +1,23 @@
+# Release recipe only. Build the reviewed full source; never reuse an old frontend payload.
+FROM ghcr.io/gitroomhq/postiz-app@sha256:7eb4a553507ce3f200deff2ec0211ab3cf834ba19eb44dd68e83ccc236509feb
+ARG RELEASE_REV
+ARG NEXT_PUBLIC_SOURCE_CODE_URL
+ENV NEXT_PUBLIC_SOURCE_CODE_URL=$NEXT_PUBLIC_SOURCE_CODE_URL
+ENV NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production IS_GENERAL=true STORAGE_PROVIDER=local
+ENV FRONTEND_URL=https://social.biz-box.io MAIN_URL=https://social.biz-box.io
+ENV NEXT_PUBLIC_BACKEND_URL=https://social.biz-box.io/api
+WORKDIR /app
+# Remove generated/vendor application source only inside this new image layer.
+# Keep the lock-matching installed dependencies; no install/postinstall or migration.
+RUN rm -rf /app/apps /app/libraries /app/dist
+COPY source/ /app/
+RUN test -n "$RELEASE_REV" && test -n "$NEXT_PUBLIC_SOURCE_CODE_URL" \
+    && echo 'a80b52413e65fc53791524120ef4fa300a2815020885961801ebed02cf9f1fee  pnpm-lock.yaml' | sha256sum -c - \
+    && DATABASE_URL=postgresql://preview:preview@127.0.0.1:1/preview node_modules/.bin/prisma generate --schema libraries/nestjs-libraries/src/database/prisma/schema.prisma \
+    && CIRCLE_NODE_TOTAL=2 RAYON_NUM_THREADS=2 NODE_OPTIONS=--max-old-space-size=4096 pnpm run build
+COPY source/ /usr/src/lyfe-social/
+LABEL org.opencontainers.image.source="https://github.com/namesrexx-design/bizbox-postiz" \
+      org.opencontainers.image.revision=$RELEASE_REV \
+      org.opencontainers.image.licenses="AGPL-3.0"
+# Explicit package filters exclude the root pm2-run script, which pushes the schema.
+CMD ["sh", "-c", "nginx && pnpm --filter postiz-frontend --filter postiz-backend --filter postiz-orchestrator --parallel run pm2 && pm2 logs"]
