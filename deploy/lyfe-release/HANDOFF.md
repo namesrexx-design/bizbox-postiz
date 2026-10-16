@@ -7,10 +7,12 @@ all timing/retry options and explicit disabled (`Test: ["NONE"]`) or null values
 An absent original field remains absent. Env merge, startup command, immutable
 image validation, HostConfig, network aliases and create-only behavior are unchanged.
 
-For the approved Live correction, W1 must set `CLONE_SOURCE` to the retained
-pre-cutover original (`postiz-rollback-20261016T075729Z`), whose probe exists.
-Inspecting the current healthcheck-less app as the source cannot recover that
-missing setting. Retain the current candidate and original rollback artifacts,
+For the next approved Live correction, use the retained pre-cutover original
+(`postiz-rollback-20261016T075729Z`) as `CLONE_SOURCE`, or a verified restored
+baseline whose complete probe equals that original. The failed75d7fe1b candidate
+lacks the probe and is retained separately; it is not current Live. Current Live
+is healthy restored baselinee95fb342, using complete snapshot030a9423, independently
+passed by W3 CHECK6211491304. Retain failed candidate/current baseline/original artifacts,
 use the same accepted immutable image
 `sha256:8c79353717a585a95bc8163bf38a86fdc7c59c965f62c204d4154926fb154638`,
 and perform only the already-approved app-only correction after W3 helper CHECK

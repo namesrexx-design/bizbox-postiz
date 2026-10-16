@@ -10,7 +10,7 @@
     "rehearsal-clone.py": "31c2c4a7590486f322904e11e4a195e2e9300930e98e31f5705220867df57622",
     "compose.rehearsal.yml": "4f2f4a3706008f88e3ddac3ab30805a16767d2c8b7d49a85e03bc49c3f7045a7",
     "test-preparation.py": "426d06fe43323ca1f5a8f1332bf3478620bf6976a75cea48d90685061a802035",
-    "README.md": "568a218a5875426e4874be2ef86b1cf3f985c62db0b7959e1988a1413908c695",
+    "README.md": "54e3d909e0a94803d04cda50d5d55d267f935e7335f14d10f2e6aa0a69b7b1f0",
     "create-app-only.py": "06f8fa2ffded55811eaf20c959edbd2ca9409b4f4b5717ef96a6bc359aacf83f",
     "build.args": "faa999c46cd2fe3029bbcf992abdebe060afcf161a92ee217984bfd2f29f8d4c",
     "temporal.dynamicconfig.yml": "d96e989241bcc4948aaea0f429b6281e6c5fb6ba5a56b14271abee80c5a3a4a2",
@@ -39,5 +39,6 @@
   },
   "operator_healthcheck_delta": "13138: deep-copy complete original Config.Healthcheck when present; preserve absent/null/disabled semantics; unchanged image/source/Env/startup/HostConfig/network/grant scope",
   "healthcheck_repair_image": "sha256:8c79353717a585a95bc8163bf38a86fdc7c59c965f62c204d4154926fb154638",
-  "healthcheck_repair_clone_source": "retained pre-cutover original postiz-rollback-20261016T075729Z; current candidate has no probe to copy"
+  "healthcheck_repair_clone_source": "retained pre-cutover original postiz-rollback-20261016T075729Z or verified restored baseline with identical complete probe; failed75d7fe1b is not a probe-preservation source",
+  "healthcheck_live_state": "Current e95fb342 Live is restored/healthy from COMPLETE snapshot030a9423, W3 PASS6211491304; failed probe-less75d7fe1b retained; next corrected-image8c793537 recreation awaits helper CHECK"
 }
