@@ -305,7 +305,7 @@ export class PublicIntegrationsController {
       .filter((integration) => !group || integration.customer?.id === group)
       .map((integration) => ({
         id: integration.id,
-        name: integration.customName || integration.name,
+        name: integration.name,
         identifier: integration.providerIdentifier,
         picture: integration.picture,
         disabled: integration.disabled,
@@ -628,13 +628,11 @@ export class PublicIntegrationsController {
     @Body('releaseId') releaseId: string
   ) {
     Sentry.metrics.count('public_api-request', 1);
-    // the batch only links the posts in the dashboard
-    const { batchId, ...post } = await this._postsService.updateReleaseId(
+    return this._postsService.updateReleaseId(
       org.id,
       id,
       releaseId
     );
-    return post;
   }
 
   @Get('/analytics/:integration')
