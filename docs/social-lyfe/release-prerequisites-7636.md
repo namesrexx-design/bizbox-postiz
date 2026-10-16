@@ -116,6 +116,13 @@ and 8,679,485,440 available bytes. Its unrounded utilization is about 97.19%;
 cross the exact 90% ratio. To make the displayed `df` percentage **below 90**,
 budget at least 25,319,696,917 bytes (about 23.58 GiB), plus a margin for concurrent
 writes. This is a measured target, not a capacity guarantee or move authorization.
+That amount clears only the percentage gate. W1's later guarded build refusal
+also requires **40 GiB available on Docker's filesystem**, **5 GiB MemAvailable**,
+and coordinator allocation of all three shared slots. Its recorded snapshot has
+9,101,303,808 disk bytes available and 3,416,014,848 memory bytes available:
+the disk deficit to 40 GiB is **33,848,369,152 bytes (about 31.52 GiB)**, before
+concurrent writes. Satisfy both disk gates, RAM and slot allocation; do not treat
+the earlier approximately 24 GiB percentage budget as build clearance.
 
 The earlier onboarding gate was 7 GiB available, and its capacity task closed
 without moving its 18 planned directories. That outcome does not clear this

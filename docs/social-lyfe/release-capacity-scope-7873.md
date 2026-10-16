@@ -28,8 +28,12 @@ before any separately authorized retirement.
 | `/srv/lyfe/work-socialive-name-20261014-evidence/build` | 966,111,232 | No mount/process reference, but seven dependency symlinks and historical build script. Excluded from this proposal pending owner retirement and a separately reviewed symlink-preserving method. |
 
 The ten inspected paths total **1,348,177,920 allocated bytes** (about 1.26 GiB),
-even before exclusions. They cannot clear the approximately 23.58 GiB measured
-Docker-layer recovery target. The one proposed failed backend directory supplies
+even before exclusions. They cannot clear either the approximately 23.58 GiB
+percentage-gate target or w1's later **40 GiB available-space guard**. The latter
+snapshot needs **33,848,369,152 bytes (31.52 GiB)** more available space, plus
+concurrent-write margin; 5 GiB MemAvailable and the coordinated three-slot grant
+must also pass. See `/mnt/storagebox/work/2452-release/guarded-build-refusal.json`.
+The one proposed failed backend directory supplies
 only about 15 MiB. No move of that directory is recommended as sufficient recovery.
 The broader capacity owner/Claude must clear another exact reviewed scope before
 the image gate can pass; this task supplies no authority to prune or move it.
