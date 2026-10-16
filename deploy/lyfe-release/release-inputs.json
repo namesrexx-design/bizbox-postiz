@@ -1,0 +1,40 @@
+{
+  "application_revision": "1bac9b61be8a30dea31b7cdac4a76bf1f51f5229",
+  "source_archive_sha256": "3b5a9c8566327db43d400976026794b095166637170904c4c97c6e25b8994286",
+  "preparation_revision": "23cc99fad5d26568a8402e22197c9aeebef58320",
+  "operator_revision": "833fd239532891b2c41dac022850c891b90d47b3",
+  "operator_path": "docs/social-lyfe/operator-handoff-2519.md",
+  "approval": "appr_mvabgkmsa61a518f",
+  "files_sha256": {
+    "guarded-build.py": "a04b3c6594f30e0e1c9b1be993ed834db3241f739149d569740de84325bb0138",
+    "rehearsal-clone.py": "31c2c4a7590486f322904e11e4a195e2e9300930e98e31f5705220867df57622",
+    "compose.rehearsal.yml": "4f2f4a3706008f88e3ddac3ab30805a16767d2c8b7d49a85e03bc49c3f7045a7",
+    "test-preparation.py": "5f9ce787e36a41bedabe83d903c54ee25bd5326961c1425f8d7f04150090c52d",
+    "README.md": "e7c0dedf6c9788af972c9eb46cb4a9a8f4d53e98151f329bba1bbbf0f477ddee",
+    "create-app-only.py": "607d57bfa10fce01bb45666d3f2ec1d8d47ef9af3f0ad8a51076118f7096a249",
+    "build.args": "faa999c46cd2fe3029bbcf992abdebe060afcf161a92ee217984bfd2f29f8d4c",
+    "temporal.dynamicconfig.yml": "d96e989241bcc4948aaea0f429b6281e6c5fb6ba5a56b14271abee80c5a3a4a2",
+    "loopback-proxy.cjs": "feec02dfc7c0a4170d75998b9b4b9f886b522197a802e3c02409be04e0cd97dc",
+    "stop-loopback-proxy.py": "7d9a51594db46dcb6280691f6a3c39da144ce4a20280342d4ff74ac238e1aaa3"
+  },
+  "source_offer_url": "https://social.biz-box.io/api/source/1bac9b61be8a30dea31b7cdac4a76bf1f51f5229.tar.gz",
+  "source_context": "/mnt/work/2452-release/w2/bear-bull-ico-context-9198",
+  "accepted_integration_revision": "92b0cc04736e5bcc692dd0b25499856c1059c52b",
+  "build_output": "/mnt/storagebox/social-media/9476-pr6-canonical-repin/build-output/retry-1",
+  "slot_grant": "2452-pr6-1bac9b61-retry1-three-slots",
+  "status": "PROPOSED retry1 after cgroup OOM: six GiB compiler cap, 7.5GiB entry threshold; separate coordinator grant required",
+  "operator_startup_delta": "10247: PM2 daemon prewarm and sequential three-package startup only; accepted Env merge and remaining operator bytes retained",
+  "loopback_relay_provenance": "ab589d976d3d85c26f08c474e41da11b38620fbb: exact PR5 relay/lifecycle helpers and matching phase runbook; corrected PR7 source/image/archive namespace retained",
+  "retry_reason": "Confirmed original 4608MiB cgroup OOM during Next TypeScript; retain application/archive/recipe/V8/workers/CPU; require 6144MiB cap and7.5GiB host MemAvailable",
+  "destination": {
+    "status": "PUBLISHED / W3 PASS",
+    "url": "https://biz-box.io/owner/room?room=social-media",
+    "pr": "https://github.com/namesrexx-design/bizbox/pull/480",
+    "merged_at": "2026-10-16T06:45:03Z",
+    "platform_revision": "0893533de58ca704f884fe3d911a84d3d2d68286",
+    "checkpoint_id": "6ad1c56c4de26e549df4a3c8",
+    "deployed_at": "2026-10-16T06:37:43.752Z",
+    "review_url": "https://github.com/namesrexx-design/bizbox/pull/480#issuecomment-6209738514",
+    "archive_live_studio": "/mnt/storagebox/social-media/11069-published-social-destination-check/"
+  }
+}
