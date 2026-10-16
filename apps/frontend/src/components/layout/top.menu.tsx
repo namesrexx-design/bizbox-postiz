@@ -71,6 +71,7 @@ export const useMenuItem = () => {
         </svg>
       ),
       path: OWNER_SOCIAL_ROOM_URL,
+      role: ['ADMIN', 'SUPERADMIN'],
     },
     {
       name: t('analytics', 'Analytics'),
