@@ -8,8 +8,10 @@ const { NestFactory } = require('@nestjs/core');
 const { loadTypeScript, root } = require('./load-typescript.cjs');
 const prisma = 'libraries/nestjs-libraries/src/database/prisma/';
 const content = loadTypeScript('libraries/helpers/src/utils/sanitize.post.content.ts');
+const profileContract = loadTypeScript('libraries/nestjs-libraries/src/facebook-profile/contract.ts');
 const { PostsService } = loadTypeScript(prisma + 'posts/posts.service.ts', {
   '@gitroom/helpers/utils/sanitize.post.content': content,
+  '@gitroom/nestjs-libraries/facebook-profile/contract': profileContract,
 });
 const { PostsRepository } = loadTypeScript(prisma + 'posts/posts.repository.ts');
 const { IntegrationRepository } = loadTypeScript(prisma + 'integrations/integration.repository.ts');
@@ -22,7 +24,7 @@ const { PublicController } = loadTypeScript('apps/backend/src/api/routes/public.
 const { IntegrationListTool } = loadTypeScript('libraries/nestjs-libraries/src/chat/tools/integration.list.tool.ts', {
   '@gitroom/nestjs-libraries/chat/auth.context': { checkAuth() {} },
 });
-const object = (Class, members) => Object.assign(Object.create(Class.prototype), members);
+const object = (Class, members) => Object.assign(Object.create(Class.prototype), Class === PostsService ? { _facebookProfiles: { interceptDraft: async () => null } } : {}, members);
 const integration = { id: 'channel-a', name: 'Provider name', providerIdentifier: 'linkedin', postingTimes: '[]', additionalSettings: '[]', token: 'synthetic-private', refreshToken: 'synthetic-private-refresh' };
 const row = (id, group, channel = 'channel-a') => ({ id, group, integrationId: channel, integration, parentPostId: null, settings: '{}', image: '[]', content: 'same text', publishDate: new Date('2030-01-01T10:00:00Z'), state: 'DRAFT' });
 

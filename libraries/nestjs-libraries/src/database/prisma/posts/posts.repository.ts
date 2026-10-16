@@ -194,6 +194,7 @@ export class PostsRepository {
       select: {
         id: true,
         content: true,
+        image: true,
         publishDate: true,
         releaseURL: true,
         releaseId: true,
