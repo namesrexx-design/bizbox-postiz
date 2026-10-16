@@ -55,3 +55,9 @@ candidate revision. No application service or datastore starts. The build emits
 only the review frontend and logs. The isolated preview and its synthetic API
 fixture are separate; its writes are blocked. Release/rollback order remains in
 `docs/social-lyfe/linkedin-agent-release.md`.
+
+The measured retry may lower its container budget without changing application
+code: `POSTIZ_REVIEW_MEMORY_LIMIT=4608m POSTIZ_REVIEW_HEAP_MB=3072` selects a
+4.5 GiB cap and 3 GiB heap. The private launch guard requires another 512 MiB
+of host headroom before starting. A 5 GiB-cap launch was skipped when only
+5.19 GiB was available; no compiler started for that gated attempt.
