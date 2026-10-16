@@ -1,3 +1,37 @@
+## Healthcheck preservation follow-up 13138
+
+The first actual app-only cutover served HTTP200 but lost Docker health monitoring:
+`create-app-only.py` did not copy the original container's `Config.Healthcheck`.
+The helper now deep-copies that complete field when present, including `Test`,
+all timing/retry options and explicit disabled (`Test: ["NONE"]`) or null values.
+An absent original field remains absent. Env merge, startup command, immutable
+image validation, HostConfig, network aliases and create-only behavior are unchanged.
+
+For the next approved Live correction, use the retained pre-cutover original
+(`postiz-rollback-20261016T075729Z`) as `CLONE_SOURCE`, or a verified restored
+baseline whose complete probe equals that original. The failed75d7fe1b candidate
+lacks the probe and is retained separately; it is not current Live. Current Live
+is healthy restored baselinee95fb342, using complete snapshot030a9423, independently
+passed by W3 CHECK6211491304. Retain failed candidate/current baseline/original artifacts,
+use the same accepted immutable image
+`sha256:8c79353717a585a95bc8163bf38a86fdc7c59c965f62c204d4154926fb154638`,
+and perform only the already-approved app-only correction after W3 helper CHECK
+and a fresh quiet-work check. No image rebuild, compiler, new account, migration,
+provider/OAuth action, scheduling or public social post is part of this delta.
+
+After correction, compare actual `Config.Healthcheck` with the original, require
+real Docker probe success plus existing HTTP/PM2 stability, then recheck preserved
+Env/schema/state (including each publishDate), populated-org API, uploads/config
+contents and queues with W3. The accepted complete private Live snapshot and all
+originals remain the rollback path. This PR does not execute the Live correction.
+
+`test-preparation.py` executes the actual production helper with synthetic Docker
+inspect responses and captures its real serialized create request. The transport
+is mocked and real sockets are forbidden. It verifies complete probe/deep-copy
+preservation, absent/null/disabled cases, forward Env/startup/network retention,
+and rollback source-setting removal without copying live keys or starting Docker.
+The regression fails against the previous helper and passes with this field copy.
+
 > Retry1 proposal after confirmed compiler cgroup OOM: compiler hard memory/no-swap cap is6144MiB and entry MemAvailable is7.5GiB. Source/context/archive/Dockerfile/V8/workers/CPU and all disk/lock/isolation gates retain accepted bytes. Requires new coordinator grant; failed run remains intact.
 
 > Proposed repin only. Start with [HANDOFF.md](HANDOFF.md). W1 retains the
@@ -233,7 +267,8 @@ earlier handoff copied old `Config.Env` directly, dropping the new image's
 The same merge order is now applied in
 [PR3's complete runnable production handoff](https://github.com/namesrexx-design/bizbox-postiz/blob/833fd239532891b2c41dac022850c891b90d47b3/docs/social-lyfe/operator-handoff-2519.md).
 Use the adjacent canonical `create-app-only.py`, derived from that corrected
-handoff with the reviewed PM2 prewarm/sequential-startup delta, instead of the
+handoff with the reviewed PM2 prewarm/sequential-startup delta and13138 complete
+original Healthcheck preservation, instead of the
 historical helper in the unchanged PR6 archive. Its environment merge is retained.
 Use the linked operator handoff's private preservation and rollback procedure.
 
