@@ -78,31 +78,39 @@ still use the saved room. If it also must be reverted, use a separate reviewed
 source revert and the normal site publish procedure after removing the Postiz
 entry point. No database rollback is involved.
 
-## Validation status
+## Validation status (2026-10-16)
 
-The 18 focused checks pass, including production provider methods, real scope
-validation, admin/member navigation, three redirect routes, native server sanitizer
-loading and actual Nest HTTP disabled responses. Vite production build and 34
-navigation/owner-access/room API tests pass for the companion destination change;
-its 390 x 844 Chromium and WebKit browser checks also pass.
+The exact combined source is
+[`7ddf86821b6e0ac2b42731d7d15f3e72dce5cfe3`](https://github.com/namesrexx-design/bizbox-postiz/tree/7ddf86821b6e0ac2b42731d7d15f3e72dce5cfe3).
+All 21 focused tests pass in the public pinned toolchain with network disabled.
+The complete backend TypeScript compile and complete production Next review build
+both exit 0. The frontend used one worker, 2 CPUs, a 4.5 GiB container cap,
+3 GiB V8 heap and disabled source maps. Earlier default-profile memory, jsdom
+asset and font-loader failures are retained as failure history; the repaired
+review build passes webpack, TypeScript, page-data and static generation.
 
-The complete backend compile passes with the matching client generated offline
-from the candidate schema. The older cached generated client lacked main's
-`customName`/`batchId` fields. Compare the production schema before release;
-this work performs no migrations.
+Independent 390 × 844 Chromium/WebKit phone review is **PASS**, covering login,
+calendar, menu/source and exact Agent destination, channel chooser and editor.
+Builder browser smoke also passes both engines, including typing in the editor,
+the Agent link into the isolated owner fixture, legacy redirects, no Copilot
+requests, no API writes and no page errors. These checks use synthetic users,
+channels and an owner pass; API writes are blocked. They establish no real OAuth,
+connected-account or publication behavior. The companion BizBox #480 has 34
+passing tests, successful CI and independent phone PASS; it remains unmerged.
 
-The source-map-enabled frontend hit its 6 GiB container memory cap. The no-maps
-review profile passed webpack and TypeScript, then page-data collection exposed
-jsdom's missing bundled `browser/default-stylesheet.css`. The app now configures
-native Node loading of `isomorphic-dompurify` and `jsdom`; the sanitizer still
-passes its unsafe-HTML check. A full retry and calendar/editor/channel smoke are
-pending the coordinator's next slot after web-app. Keep the earlier failed gates
-until that run and the independent check pass.
+**Release HOLD:** read-only inspection of all 85 candidate models against Live
+column metadata found `Integration.customName` and `Post.batchId` absent. The
+preview embeds `http://127.0.0.1:4027/api` in server output. Neither generating a
+client nor passing the preview makes this artifact production compatible.
+No full release image or frontend/backend/orchestrator startup check exists.
+No extra compiler, migration, deployment or OAuth was run. The existing approval
+card `appr_mvabgkmsa61a518f` remains pending. Owner approval alone cannot clear
+these technical gates.
 
-Exact public build configuration and compiler scripts are in
-`deploy/lyfe-social/REVIEW-BUILD.md`. All settings and source must accompany the
-final candidate; the review profile disables source maps and limits compiler
-workers to one. No deployment or OAuth test has occurred.
+The authoritative concrete operator instructions are in
+[`operator-handoff-2519.md`](operator-handoff-2519.md). They supersede the generic
+release/rollback steps above and PR2's stock-only rollback. The tested combined
+source remains frozen; this documentation update does not claim a new build.
 
 ## Temporary LinkedIn patch snapshot and recovery
 
