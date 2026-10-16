@@ -1,3 +1,5 @@
+import { FacebookProfileService } from '@gitroom/nestjs-libraries/facebook-profile/facebook.profile.service';
+import { isProfileIntegration } from '@gitroom/nestjs-libraries/facebook-profile/contract';
 import {
   BadRequestException,
   Injectable,
@@ -73,7 +75,8 @@ export class PostsService {
     private _shortLinkService: ShortLinkService,
     private _openaiService: OpenaiService,
     private _temporalService: TemporalService,
-    private _refreshIntegrationService: RefreshIntegrationService
+    private _refreshIntegrationService: RefreshIntegrationService,
+    private _facebookProfiles: FacebookProfileService
   ) {}
 
   searchForMissingThreeHoursPosts() {
@@ -890,7 +893,8 @@ export class PostsService {
       }
     } catch (err) {}
 
-    if (state === 'DRAFT') {
+    const workflowPost = await this._postRepository.getPostById(postId, orgId);
+    if (state === 'DRAFT' || isProfileIntegration(workflowPost?.integration)) {
       return;
     }
 
@@ -1079,6 +1083,8 @@ export class PostsService {
     creationMethod: CreationMethod,
     keepGroup = false
   ): Promise<any[]> {
+    const profileDraft = await this._facebookProfiles.interceptDraft(orgId, body, creationMethod);
+    if (profileDraft) return profileDraft;
     const postList = [];
     for (const post of body.posts) {
       if (
@@ -1193,6 +1199,7 @@ export class PostsService {
     }
 
     const integration = (root as any).integration;
+    if (isProfileIntegration(integration)) throw new BadRequestException('Frozen profile items require a new approval, not a settings edit');
 
     let existingSettings: Record<string, any>;
     try {
@@ -1317,6 +1324,7 @@ export class PostsService {
       throw new BadRequestException('Post not found');
     }
 
+    if (isProfileIntegration(getPostById.integration)) throw new BadRequestException('Profile lane remains DRAFT; native promotion is forbidden');
     const state: State = status === 'draft' ? 'DRAFT' : 'QUEUE';
     await this._postRepository.changeState(id, state);
 
@@ -1341,6 +1349,7 @@ export class PostsService {
   ) {
     const getPostById = await this._postRepository.getPostById(id, orgId);
 
+    if (isProfileIntegration(getPostById?.integration)) throw new BadRequestException('Frozen profile schedule requires a new approval');
     if (action === 'schedule' && !republish) {
       this.guardAgainstRepublish(getPostById, 'changeDate');
     }

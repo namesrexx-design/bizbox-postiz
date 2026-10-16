@@ -51,6 +51,8 @@ import { ErrorsService } from '@gitroom/nestjs-libraries/database/prisma/errors/
 import { AdminStatsRepository } from '@gitroom/nestjs-libraries/database/prisma/admin-stats/admin-stats.repository';
 import { AdminStatsService } from '@gitroom/nestjs-libraries/database/prisma/admin-stats/admin-stats.service';
 
+import { FacebookProfileService } from '@gitroom/nestjs-libraries/facebook-profile/facebook.profile.service';
+
 @Global()
 @Module({
   imports: [],
@@ -72,6 +74,7 @@ import { AdminStatsService } from '@gitroom/nestjs-libraries/database/prisma/adm
     IntegrationService,
     IntegrationRepository,
     PostsService,
+    FacebookProfileService,
     PostsRepository,
     StripeService,
     PaymentService,

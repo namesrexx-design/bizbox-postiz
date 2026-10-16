@@ -12,7 +12,9 @@ import { PublicIntegrationsController } from '@gitroom/backend/public-api/routes
 import { PublicAuthMiddleware } from '@gitroom/backend/services/auth/public.auth.middleware';
 import { SuperAdminGuard } from '@gitroom/backend/services/auth/super.admin.guard';
 
-const authenticatedController = [PublicIntegrationsController];
+import { PublicFacebookProfileController } from './routes/v1/public.facebook.profile.controller';
+
+const authenticatedController = [PublicIntegrationsController, PublicFacebookProfileController];
 @Module({
   imports: [UploadModule],
   controllers: process.env.MCP_ONLY ? [] : [...authenticatedController],
