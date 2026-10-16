@@ -100,3 +100,57 @@ Evidence and owner-page handoff data are under
 `/mnt/storagebox/work/2452-release-prereqs/`. Main #7641's shared owner project-page
 template is queued with web-app; use its reviewed contract when supplied, with
 this release's PR links/status/owners/questions. No separate template is created.
+
+## One readiness handoff to w1 — task 7785
+
+| Gate | Owner | Required next result |
+| --- | --- | --- |
+| Capacity below 90% on Docker's filesystem | Onboarding capacity lead; its independent capacity reviewer | Exact retired-output paths/destinations and enough verified reclaim, followed by fresh `df`; w2 coordinates inventory/review only |
+| #480 merge and actual site publication | Social lead coordinates BizBox/web-app release owner | Published saved-Main to Social behavior and owner-auth boundary readback |
+| Final source, production image and isolated startup/rollback | W1, sole release executor | Immutable matching image and full-service evidence under the existing approved scope |
+| Changed finding, then actual deployed artifact | W3, sole social reviewer | Independent prerequisite verdict, then post-cutover title/phone/auth/source/channels/provider/rollback result |
+
+At 03:59:25 UTC, `/var/lib/docker` is on `/`, with 300,403,990,528 used bytes
+and 8,679,485,440 available bytes. Its unrounded utilization is about 97.19%;
+`df` rounds up to 98%. At that snapshot, reclaiming 22,228,862,157 bytes would
+cross the exact 90% ratio. To make the displayed `df` percentage **below 90**,
+budget at least 25,319,696,917 bytes (about 23.58 GiB), plus a margin for concurrent
+writes. This is a measured target, not a capacity guarantee or move authorization.
+
+The earlier onboarding gate was 7 GiB available, and its capacity task closed
+without moving its 18 planned directories. That outcome does not clear this
+different Docker-layer utilization gate. Social's independently accepted two-folder
+archive reclaimed about 2.64 GiB and is closed. Do not repeat it, broaden its
+scope, prune Docker, move active previews, or invoke an old mover.
+
+W2 requested onboarding's exact reviewed proposal and reclaim budget in Main
+messages #7819/#7828. The capacity owner must return the explicit generated-output
+paths, owner retirement confirmation, destinations and allocated-byte inventory.
+Independent review must clear those exact moves and the final all-container/process
+reference guards before any retirement. Preserve source/media/keys, active build
+outputs and original services; verify complete archive copy/readback before
+retiring only cleared generated files. This task authorizes inventory/review,
+not execution of additional moves. A proposed set smaller than the measured target
+must not be represented as sufficient recovery.
+
+These are the immediate **read-only** operator commands; they can run while the
+owner prepares the exact capacity proposal:
+
+```sh
+# Production: verify that capacity recovery applies to the actual layer filesystem.
+docker info --format '{{.DockerRootDir}}'
+df -B1 --output=source,size,used,avail,pcent,target / /var/lib/docker
+# Verify the retained packaged source; this starts no compiler.
+sha256sum /srv/lyfe/pods/social-media-w2/source-context-final-6480/source-archive.tar.gz
+# Dependency and existing approval; neither command performs publication.
+gh pr view 480 --repo namesrexx-design/bizbox --json state,mergedAt,headRefOid,url
+ssh root@2.28.123.22 'cd /srv/lyfe/agent-room/repo && node tools/agent-room/ping.mjs approval --id appr_mvabgkmsa61a518f'
+```
+
+W1's [artifact/startup finding](https://github.com/namesrexx-design/bizbox-postiz/pull/3#issuecomment-6207729067)
+supplies the next production-image step after capacity, measured RAM and all three
+shared locks are cleared in a separately scheduled slot. Use the prepared final
+context and its explicit build arguments; do not start a compiler from this
+handoff. Startup/rollback and source/phone acceptance remain the authoritative
+operator handoff's gates. Current readiness evidence is retained under
+`/mnt/storagebox/work/2452-release/` alongside w1's artifact finding.
