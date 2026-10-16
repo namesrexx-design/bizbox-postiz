@@ -23,7 +23,7 @@ def merge_app_environment(image_env, runtime_env):
 payload={k:copy.deepcopy(cfg[k]) for k in ('WorkingDir','User','ExposedPorts','Entrypoint') if k in cfg}
 payload['Env']=merge_app_environment(image_cfg.get('Env'),cfg.get('Env'))
 payload.update(Image=image, HostConfig=copy.deepcopy(old['HostConfig']),
-    Cmd=['sh','-c','nginx && pnpm --filter postiz-frontend --filter postiz-backend --filter postiz-orchestrator --parallel run pm2 && pm2 logs'],
+    Cmd=['sh','-c','nginx && pm2 ping && pnpm --filter postiz-frontend run pm2 && pnpm --filter postiz-backend run pm2 && pnpm --filter postiz-orchestrator run pm2 && pm2 logs'],
     Labels={'io.lyfe.release.previous-container':os.environ['ROLLBACK_NAME']})
 payload['NetworkingConfig']={'EndpointsConfig':{name:{'Aliases':[a for a in (net.get('Aliases') or []) if a not in (old['Id'],old['Id'][:12])]}
     for name,net in old['NetworkSettings']['Networks'].items()}}

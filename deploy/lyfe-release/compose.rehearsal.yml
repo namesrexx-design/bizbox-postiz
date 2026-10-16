@@ -85,6 +85,14 @@ services:
       ENABLE_ES: "false"
       TEMPORAL_NAMESPACE: default
       DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/docker.yaml
+      SKIP_ADD_CUSTOM_SEARCH_ATTRIBUTES: "true"
+    volumes:
+      - type: bind
+        source: ./temporal.dynamicconfig.yml
+        target: /etc/temporal/config/dynamicconfig/docker.yaml
+        read_only: true
+        bind:
+          create_host_path: false
     networks: [isolated]
   smtp:
     image: axllent/mailpit@sha256:030f06031ce5c60913ac9363da1ab0d4be6fd2a78147dd0e1ca0fcac665d6b34

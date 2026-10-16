@@ -164,8 +164,10 @@ earlier handoff copied old `Config.Env` directly, dropping the new image's
 `RELEASE_SOURCE_REVISION` and causing authenticated source download to return 503.
 The same merge order is now applied in
 [PR3's complete runnable production handoff](https://github.com/namesrexx-design/bizbox-postiz/blob/833fd239532891b2c41dac022850c891b90d47b3/docs/social-lyfe/operator-handoff-2519.md).
-Use that corrected handoff instead of its historical copy in the unchanged PR6
-archive.
+Use the adjacent canonical `create-app-only.py`, derived from that corrected
+handoff with the reviewed PM2 prewarm/sequential-startup delta, instead of the
+historical helper in the unchanged PR6 archive. Its environment merge is retained.
+Use the linked operator handoff's private preservation and rollback procedure.
 
 The equivalent replacement for an older `create-app-only.py`, immediately after
 its `payload.update`, is below. This adds no Live write during preparation; it

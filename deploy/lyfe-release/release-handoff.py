@@ -48,6 +48,7 @@ def main():
         'proposal_status': inputs['status'],
         'required_slot_grant': inputs['slot_grant'],
         'corrected_operator_revision': inputs['operator_revision'],
+        'operator_startup_delta': inputs.get('operator_startup_delta'),
         'build_arguments': build_args,
         'approval': {'id': inputs['approval'], 'last_accepted_state': 'APPROVED',
                      'requirement': 'Re-read and reconcile final source/image/scope before Live write'},
