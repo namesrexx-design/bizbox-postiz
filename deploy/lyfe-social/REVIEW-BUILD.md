@@ -1,0 +1,56 @@
+# Combined review build
+
+Review setup for the PR2 + PR3 candidate. This is not a deployment command.
+The app source for the current compile is the `efa83fdf` candidate revision;
+these public setup files reproduce its compiler configuration and command. They
+are also included on the combined candidate branch. A final release source offer
+must point to its complete selected source, including the build setup.
+
+`next.review.config.js` is the app's Next configuration with compiler workers
+limited to one, webpack memory optimizations enabled, and browser/server/Sentry
+source maps disabled. No authentication, routing, endpoint, provider or editor
+code is substituted. The default source-map-enabled build exceeded its 6 GiB
+container cap; the review profile's result is reported separately in PR3.
+
+Set `POSTIZ_REVIEW_SRC` and `POSTIZ_REVIEW_OUT` to the candidate source and a fresh
+output directory. The defaults name the actual Production paths used for this
+check. The cached build image is `bizbox-postiz:candidate-345426c-v2.25.0`; its
+pnpm lock matches the fork. No production env or keys are passed into these jobs.
+
+Pre-create writable output directories and the ignored `.next`, `next-env.d.ts`
+and backend `dist` mountpoints. Seed `next-env.d.ts` from the same cached Next
+16.3.1 toolchain. Run the code-generation script with `--network=none`: it only
+writes Prisma Client 6.5.0 for the candidate schema. It cannot run a migration or
+connect to a database. The placeholder DATABASE_URL is deliberately unreachable.
+Mount the generated client at `/app/node_modules/.prisma/client` in both builds.
+
+The full backend check uses the same cached image with source mounts read-only,
+network disabled, a fresh writable backend `dist`, 2 CPUs, a 4 GiB memory cap and
+`NODE_OPTIONS=--max-old-space-size=3072`:
+
+```sh
+../../node_modules/.bin/tsc --project tsconfig.build.json
+```
+
+It exits 0 after regenerating the client; the stale cached client failed on
+`customName` and `batchId`. Compare the live runtime/schema before any release.
+This work does not apply schema changes.
+
+Run the frontend script only after the preceding compiler exits and when the
+coordinator gives it the next slot. For exclusive serial execution, acquire all
+three shared slots in order; the generic `flock /run/lyfe-heavy.lock` wrapper is
+a three-slot shim and does not reserve the whole host:
+
+```sh
+/usr/bin/flock -o /run/lyfe-heavy.slot1 \
+  /usr/bin/flock -o /run/lyfe-heavy.slot2 \
+  /usr/bin/flock -o /run/lyfe-heavy.slot3 \
+  nice -n 10 bash deploy/lyfe-social/build-combined-frontend.review.sh
+```
+
+The frontend command uses 2 CPUs pinned to cores 0/1, a 4 GiB V8 heap and a 6 GiB
+container limit. The immutable source offer is set by the build to the selected
+candidate revision. No application service or datastore starts. The build emits
+only the review frontend and logs. The isolated preview and its synthetic API
+fixture are separate; its writes are blocked. Release/rollback order remains in
+`docs/social-lyfe/linkedin-agent-release.md`.
