@@ -21,6 +21,9 @@ const nextConfig = {
     ];
   },
   reactStrictMode: false,
+  // The server sanitizer reads jsdom's stylesheet from its package directory.
+  // Keep Node's package loader so that asset is not lost in a page bundle.
+  serverExternalPackages: ['isomorphic-dompurify', 'jsdom'],
   transpilePackages: ['crypto-hash'],
   // Enable production sourcemaps for Sentry
   productionBrowserSourceMaps: true,
