@@ -1,3 +1,35 @@
+## Healthcheck preservation follow-up 13138
+
+The first actual app-only cutover served HTTP200 but lost Docker health monitoring:
+`create-app-only.py` did not copy the original container's `Config.Healthcheck`.
+The helper now deep-copies that complete field when present, including `Test`,
+all timing/retry options and explicit disabled (`Test: ["NONE"]`) or null values.
+An absent original field remains absent. Env merge, startup command, immutable
+image validation, HostConfig, network aliases and create-only behavior are unchanged.
+
+For the approved Live correction, W1 must set `CLONE_SOURCE` to the retained
+pre-cutover original (`postiz-rollback-20261016T075729Z`), whose probe exists.
+Inspecting the current healthcheck-less app as the source cannot recover that
+missing setting. Retain the current candidate and original rollback artifacts,
+use the same accepted immutable image
+`sha256:8c79353717a585a95bc8163bf38a86fdc7c59c965f62c204d4154926fb154638`,
+and perform only the already-approved app-only correction after W3 helper CHECK
+and a fresh quiet-work check. No image rebuild, compiler, new account, migration,
+provider/OAuth action, scheduling or public social post is part of this delta.
+
+After correction, compare actual `Config.Healthcheck` with the original, require
+real Docker probe success plus existing HTTP/PM2 stability, then recheck preserved
+Env/schema/state (including each publishDate), populated-org API, uploads/config
+contents and queues with W3. The accepted complete private Live snapshot and all
+originals remain the rollback path. This PR does not execute the Live correction.
+
+`test-preparation.py` executes the actual production helper with synthetic Docker
+inspect responses and captures its real serialized create request. The transport
+is mocked and real sockets are forbidden. It verifies complete probe/deep-copy
+preservation, absent/null/disabled cases, forward Env/startup/network retention,
+and rollback source-setting removal without copying live keys or starting Docker.
+The regression fails against the previous helper and passes with this field copy.
+
 > Retry1 proposal after confirmed compiler cgroup OOM: compiler hard memory/no-swap cap is6144MiB and entry MemAvailable is7.5GiB. Source/context/archive/Dockerfile/V8/workers/CPU and all disk/lock/isolation gates retain accepted bytes. Requires new coordinator grant; failed run remains intact.
 
 # Proposed PR6 canonical repin — task 9476 / 9519
@@ -87,8 +119,9 @@ active slots and honor the coordinated web-app window before any PR6 build.
 These external operator files accompany PR6; they do not enter or modify its
 source archive. Never use the historical helper embedded in PR6, the older
 7dd review output, or a fixture bundle for release. The adjacent
-`create-app-only.py` derives from the accepted corrected PR3 block with only the
-reviewed PM2 prewarm/sequential-startup delta. The exact derivation is named in
+`create-app-only.py` derives from the accepted corrected PR3 block with the
+reviewed PM2 prewarm/sequential-startup delta and the explicit13138 Healthcheck
+preservation follow-up above. The exact derivation is named in
 `release-inputs.json`; its Env merge is unchanged.
 It requires the environment prepared by that operator handoff and is not an
 independent startup command.

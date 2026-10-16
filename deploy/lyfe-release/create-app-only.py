@@ -20,7 +20,7 @@ def merge_app_environment(image_env, runtime_env):
         if key in defaults:
             effective[key]=defaults[key]
     return [f'{key}={value}' for key,value in effective.items()]
-payload={k:copy.deepcopy(cfg[k]) for k in ('WorkingDir','User','ExposedPorts','Entrypoint') if k in cfg}
+payload={k:copy.deepcopy(cfg[k]) for k in ('WorkingDir','User','ExposedPorts','Entrypoint','Healthcheck') if k in cfg}
 payload['Env']=merge_app_environment(image_cfg.get('Env'),cfg.get('Env'))
 payload.update(Image=image, HostConfig=copy.deepcopy(old['HostConfig']),
     Cmd=['sh','-c','nginx && pm2 ping && pnpm --filter postiz-frontend run pm2 && pnpm --filter postiz-backend run pm2 && pnpm --filter postiz-orchestrator run pm2 && pm2 logs'],
