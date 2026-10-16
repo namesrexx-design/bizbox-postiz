@@ -140,8 +140,37 @@ These commands create only `lyfe2452-*` resources, an **internal** Docker networ
 new synthetic DB/Redis/Temporal queues and fresh named config/uploads volumes.
 The pinned Temporal 1.28.1 image supplies `config/dynamicconfig/docker.yaml`;
 `development-sql.yaml` is absent and makes the server exit before readiness.
+The static configuration mirrors Live's maximum ID length and search-cache
+refresh settings. `SKIP_ADD_CUSTOM_SEARCH_ATTRIBUTES=true` leaves the SQL Text
+attribute slots available for the app. If a failed run already added example
+attributes, retain that Temporal database/container and use fresh isolated
+Temporal persistence; do not delete its original state.
 The baseline has no `depends_on`, so `compose create baseline` selects only that
 app; the installed Compose CLI does not accept `create --no-deps`.
+
+The baseline supplies a synthetic `NEXT_PUBLIC_BACKEND_URL`; omitting it crashes
+the stock backend's upload-widget initialization. All app starts initialize PM2
+once, then start frontend/backend/orchestrator sequentially. This avoids concurrent
+daemon initialization losing two of the apps. The production helper retains its
+accepted environment merge with the same corrected startup command.
+
+On the reviewed Docker host, the internal bridge leaves published port 4052
+inactive. Keep the app attached only to the internal network and run the guarded
+host TCP relay after each app starts:
+
+```sh
+REHEARSAL_OUTPUT=/mnt/work/2452-release/w1
+node loopback-proxy.cjs lyfe2452-baseline "$REHEARSAL_OUTPUT" > "$REHEARSAL_OUTPUT/baseline-relay.log" 2>&1 &
+BASELINE_RELAY_PID=$!
+```
+
+The relay validates the running rehearsal name, single internal attachment and
+loopback-only binding; it forwards raw TCP only from `127.0.0.1:4052` to that
+container's nginx port. No host/external network is added to the app. Stop this
+relay when stopping baseline, then launch the same helper for candidate and
+restored with their respective names/PIDs. `stop-loopback-proxy.py` validates the
+recorded PID's actual command and app name before stopping it; it does not delete
+the relay record. Stop the final relay during cleanup.
 Only app port `127.0.0.1:4052` is published. SMTP is a non-relaying Mailpit sink
 with synthetic credentials; no external email/social/provider secrets are used.
 Never combine this file with Live compose or join any existing network. Verify
@@ -157,9 +186,12 @@ healthy `/auth/login`, `/api/auth/can-register` and orchestrator
 ROLLBACK_IMAGE=$(docker commit --pause=true lyfe2452-baseline lyfe2452-private:baseline)
 docker image save "$ROLLBACK_IMAGE" > "$PRIVATE/isolated-baseline.private.tar"
 docker stop lyfe2452-baseline
+python3 stop-loopback-proxy.py lyfe2452-baseline "$REHEARSAL_OUTPUT"
 RELEASE_IMAGE=$(cat /mnt/storagebox/work/2452-release/release-image.id)
 python3 rehearsal-clone.py --source lyfe2452-baseline --image "$RELEASE_IMAGE" --name lyfe2452-candidate --execute
 docker start lyfe2452-candidate
+node loopback-proxy.cjs lyfe2452-candidate "$REHEARSAL_OUTPUT" > "$REHEARSAL_OUTPUT/candidate-relay.log" 2>&1 &
+CANDIDATE_RELAY_PID=$!
 ```
 
 The helper refuses Live names, external networks, host binds, non-synthetic DB
@@ -218,8 +250,11 @@ Then rehearse app-only rollback, retaining both prior containers:
 
 ```sh
 docker stop lyfe2452-candidate
+python3 stop-loopback-proxy.py lyfe2452-candidate "$REHEARSAL_OUTPUT"
 python3 rehearsal-clone.py --source lyfe2452-baseline --image "$ROLLBACK_IMAGE" --name lyfe2452-restored --rollback --execute
 docker start lyfe2452-restored
+node loopback-proxy.cjs lyfe2452-restored "$REHEARSAL_OUTPUT" > "$REHEARSAL_OUTPUT/restored-relay.log" 2>&1 &
+RESTORED_RELAY_PID=$!
 ```
 
 Read back both provider fingerprints in `lyfe2452-restored`, all three stable app
@@ -228,6 +263,15 @@ The complete private image supplies the patch and backup; no stock rollback or
 schema operation is used. Stop the rehearsal apps/services after QA; preserve
 containers, volumes and private snapshot for review. Do not run `down -v`, prune,
 delete originals, or restart Live during this preparation.
+
+```sh
+docker stop lyfe2452-restored
+python3 stop-loopback-proxy.py lyfe2452-restored "$REHEARSAL_OUTPUT"
+docker compose -f compose.rehearsal.yml stop
+```
+
+If a failed-run replacement used a separate named support container, stop that
+owned replacement too. Retain it and its original database/volume for review.
 
 Only after independent image/startup/rollback PASS and #480 publication may w1
 perform the separately approved Live cutover. Re-read approval then preserve the

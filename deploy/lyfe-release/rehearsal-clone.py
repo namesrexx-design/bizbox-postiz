@@ -9,7 +9,7 @@ import socket
 import subprocess
 
 REV = 'd78e598b6117607d24cd0465f98639241c107571'
-START = 'nginx && pnpm --filter postiz-frontend --filter postiz-backend --filter postiz-orchestrator --parallel run pm2 && pm2 logs'
+START = 'nginx && pm2 ping && pnpm --filter postiz-frontend run pm2 && pnpm --filter postiz-backend run pm2 && pnpm --filter postiz-orchestrator run pm2 && pm2 logs'
 
 
 def env_map(items):

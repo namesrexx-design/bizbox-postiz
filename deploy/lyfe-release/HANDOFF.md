@@ -57,7 +57,10 @@ This d78 image cannot clear corrected-source branding parity.
 These external operator files accompany d78; they do not enter or modify its
 source archive. Never use the historical helper embedded in d78, the older
 7dd review output, or a fixture bundle for release. The adjacent
-`create-app-only.py` is an exact extraction of the accepted corrected PR3 block.
+`create-app-only.py` retains the accepted PR3 environment merge and now initializes
+one PM2 daemon before sequential package starts. Its manifest pins this corrected
+executable; replace the older embedded helper when following the linked PR3
+preservation/forward/rollback procedure.
 It requires the environment prepared by that operator handoff and is not an
 independent startup command.
 
@@ -86,5 +89,5 @@ container, complete private snapshot, active LinkedIn provider and dated backup,
 effective env, networks, config/uploads volumes, stored channels and queues.
 Never run root pm2/schema push or migrations. Private Live snapshots stay
 root-only on Live. Outputs remain under `/mnt/storagebox/work/2452-release`;
-the d78 image is built and exported. Actual app startup/email/phone/rollback and
-Live cutover have not run.
+the d78 image is built and exported. The baseline app passed stable startup and all 232 preservation hashes. Candidate
+startup/source/email/phone/rollback and Live cutover remain open.
