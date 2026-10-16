@@ -105,8 +105,11 @@ preview embeds `http://127.0.0.1:4027/api` in server output. Neither generating 
 client nor passing the preview makes this artifact production compatible.
 No full release image or frontend/backend/orchestrator startup check exists.
 No extra compiler, migration, deployment or OAuth was run. The existing approval
-card `appr_mvabgkmsa61a518f` remains pending. Owner approval alone cannot clear
-these technical gates.
+card `appr_mvabgkmsa61a518f` is **approved**, confirmed by fresh signed readback
+on 2026-10-16. Owner approval alone cannot clear these technical gates.
+The later compatible integrated candidate passes fresh schema metadata comparison;
+see [current release prerequisites](release-prerequisites-7636.md) for its exact
+source, production URL requirements and still-open #480/image/startup gates.
 
 The authoritative concrete operator instructions are in
 [`operator-handoff-2519.md`](operator-handoff-2519.md). They supersede the generic

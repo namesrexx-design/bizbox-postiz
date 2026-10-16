@@ -2,8 +2,12 @@
 
 ## Decision and exact artifacts
 
-**Do not deploy.** The existing release card `appr_mvabgkmsa61a518f` is pending.
-No second card, compiler or live write is requested by this handoff.
+**Release HOLD on technical prerequisites.** Fresh signed readback on 2026-10-16
+confirms the existing release card `appr_mvabgkmsa61a518f` is **approved**.
+W1 remains the sole release executor. Approval does not supply a production image,
+publish #480 or certify startup. No second card or compiler is requested here.
+The [current prerequisite finding](release-prerequisites-7636.md) supersedes
+historical pending-approval and unresolved-source-compatibility statements below.
 
 Accepted combined source:
 [`7ddf86821b6e0ac2b42731d7d15f3e72dce5cfe3`](https://github.com/namesrexx-design/bizbox-postiz/tree/7ddf86821b6e0ac2b42731d7d15f3e72dce5cfe3).
@@ -33,9 +37,11 @@ immutable image digest. No additional compiler is authorized for this task.
    saved Main opens Social on the first request; subsequent Main tap stays Main;
    unknown room falls back Main; missing owner pass remains 401. Existing local
    tests/CI/phone PASS do not establish that the destination is published.
-2. Resolve the **confirmed Live schema incompatibility** through a separately
-   reviewed source compatibility decision. Live lacks `Integration.customName`
-   and `Post.batchId`, required by the main-based generated client. This task
+2. Select the reviewed **compatible integrated source**, rather than the older
+   main-based preview. Live lacks `Integration.customName` and `Post.batchId`;
+   PR4 removes their application/schema dependencies. The integrated candidate
+   and fresh metadata comparison are recorded in the current prerequisite finding.
+   This metadata PASS does not certify service startup. This task
    authorizes no database mutation. Do not use `prisma db push`, migrations,
    initialization, root `pm2-run` or a frontend overlay to bypass this gate.
 3. Schedule a release build separately, record its immutable full-app image and
@@ -44,7 +50,7 @@ immutable image digest. No additional compiler is authorized for this task.
    email paths; backend TypeScript plus frontend preview are insufficient.
 4. Re-read the existing approval immediately before any Live write. If approval
    changes the source, scope or image, return it to the lead for reconciliation.
-   Pending approval is not permission to execute the commands below.
+   Approved scope and all technical gates must match before executing the commands below.
 
 ## Read-only Live baseline and schema check
 
